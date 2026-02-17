@@ -5,43 +5,24 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\SystemInformationController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\PermissionController;
-use App\Http\Controllers\Admin\DesignationController;
-use App\Http\Controllers\Admin\BranchController;
 use App\Http\Controllers\Admin\CustomerController;
-use App\Http\Controllers\Admin\BannerController;
-use App\Http\Controllers\Admin\ClientSayController;
 use App\Http\Controllers\Admin\SocialLinkController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\ExtraPageController;
-use App\Http\Controllers\Admin\MessageController;
-use App\Http\Controllers\Admin\AboutUsController;
-use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Front\TextController;
 use App\Http\Controllers\Front\AuthController;
 use App\Http\Controllers\Front\FrontController;
-use App\Http\Controllers\Front\CustomerPersonalController;
-use App\Http\Controllers\Admin\BrandController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\SubCategoryController;
-use App\Http\Controllers\Admin\SizeChartController;
-use App\Http\Controllers\Admin\SizeController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\SidebarMenuController;
-use App\Http\Controllers\Admin\OfferSectionController;
-use App\Http\Controllers\Admin\SliderControlController;
-use App\Http\Controllers\Admin\OrderController;
-use App\Http\Controllers\Admin\RewardPointController;
-use App\Http\Controllers\Admin\CompanyCategoryController;
-use App\Http\Controllers\Admin\HighlightProductController;
-use App\Http\Controllers\Admin\ExtraCategoryController;
-use App\Http\Controllers\Admin\HeroLeftSliderController;
-use App\Http\Controllers\Admin\HeroRightSliderController;
-use App\Http\Controllers\Admin\FooterBannerController;
-use App\Http\Controllers\Admin\AreaWisePriceController;
-use App\Http\Controllers\Admin\MainBrandController;
+use App\Http\Controllers\Admin\GeneralConfigController;
+use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\TeamController;
+use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\PortfolioController;
+use App\Http\Controllers\Admin\WhoWeAreController;
+use App\Http\Controllers\Admin\HeroController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -162,114 +143,122 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::group(['middleware' => ['auth']], function() {
 
-
-
-    Route::controller(App\Http\Controllers\Admin\ProductController::class)->group(function () {
-    // আগের রাউটগুলো...
-    
-    // NEW AJAX ROUTES
-    Route::get('/get-brands-by-category/{categoryId}', 'getBrandsByCategory')->name('get.brands.by.category');
-    Route::get('/get-company-categories-by-brand/{brandId}', 'getCompanyCategoriesByBrand')->name('get.company.categories.by.brand');
+Route::prefix('admin/hero')->middleware(['auth'])->group(function () {
+    Route::get('/', [HeroController::class, 'index'])->name('hero.index');
+    Route::post('/update', [HeroController::class, 'update'])->name('hero.update');
 });
 
-    // Company Category Routes
-    Route::get('company-category/get-by-company/{id}', [CompanyCategoryController::class, 'getCategoriesByCompany'])->name('company-category.get-by-company');
-
-    Route::get('company-category/import/sample', [CompanyCategoryController::class, 'downloadSample'])->name('company-category.import.sample');
-    Route::post('company-category-import', [CompanyCategoryController::class, 'import'])->name('company-category.import');
-
-    Route::get('ajax_company_categories', [CompanyCategoryController::class, 'data'])->name('ajax.company-category.data');
-    Route::resource('company-category', CompanyCategoryController::class);
-
-    Route::get('main_brands/import/sample', [MainBrandController::class, 'downloadSample'])->name('main_brand.import.sample');
-Route::post('main-brands-import', [MainBrandController::class, 'import'])->name('main_brand.import');
-
-// Place this near your existing Brand/Company routes
-Route::get('brands/import/sample', [BrandController::class, 'downloadSample'])->name('brand.import.sample');
-Route::post('brands-import', [BrandController::class, 'import'])->name('brand.import');
-    // Place this near your existing Category routes
-Route::get('categories/import/sample', [CategoryController::class, 'downloadSample'])->name('category.import.sample');
-Route::post('categories-import', [CategoryController::class, 'import'])->name('category.import');
-
-Route::get('products/import/sample', [App\Http\Controllers\Admin\ProductController::class, 'downloadSample'])->name('product.import.sample');
-    // In routes/web.php, inside the auth middleware group
-Route::post('products-import', [App\Http\Controllers\Admin\ProductController::class, 'import'])->name('product.import');
-
-
-   
-
-    // Shareholder List Routes
-    Route::get('/shareholders', [UserController::class, 'shareholderIndex'])->name('shareholders.index');
-    Route::get('/ajax-shareholders-data', [UserController::class, 'shareholdersData'])->name('ajax.shareholders.data');
-
-    
-
-    Route::prefix('reward-points')->name('reward.')->group(function () {
-        Route::get('data', [RewardPointController::class, 'data'])->name('data');
-    Route::get('settings', [RewardPointController::class, 'settings'])->name('settings');
-    Route::post('settings', [RewardPointController::class, 'updateSettings'])->name('settings.update');
-    Route::get('history', [RewardPointController::class, 'history'])->name('history');
-    Route::get('history/{customer}', [RewardPointController::class, 'customerHistory'])->name('customer.history');
+Route::prefix('admin/who-we-are')->middleware(['auth'])->group(function () {
+    Route::get('/', [WhoWeAreController::class, 'index'])->name('whoweare.index');
+    Route::post('/update', [WhoWeAreController::class, 'update'])->name('whoweare.update');
 });
 
-Route::post('/order-customer-quick-store', [OrderController::class, 'quickStoreCustomer'])->name('order.customer.quick-store');
-    // Add this to your admin route group
-Route::post('orders/bulk-update-status', [OrderController::class, 'bulkUpdateStatus'])->name('order.bulk-update-status');
-    Route::post('order-payment/{order}', [OrderController::class, 'storePayment'])->name('order.payment.store');
-Route::get('order-print-a4/{order}', [OrderController::class, 'printA4'])->name('order.print.a4');
-Route::get('order-print-pos/{order}', [OrderController::class, 'printPOS'])->name('order.print.pos');
-Route::get('order-print-a5/{order}', [OrderController::class, 'printA5'])->name('order.print.a5');
-Route::post('/order/update-status-prices/{id}', [OrderController::class, 'updateStatusWithPrices'])->name('order.update.status.prices');
-Route::get('order-search-customers', [OrderController::class, 'searchCustomers'])->name('order.search-customers');
-
-       Route::get('ajax_orders', [OrderController::class, 'data'])->name('ajax.order.data');
-        Route::post('storeorder-update-status/{order}', [OrderController::class, 'updateStatus'])->name('order.update-status');
-    Route::get('orderstore_details/{id}', [OrderController::class, 'getDetails'])->name('order.get-details');
-    Route::get('ordersdestroymultiple', [OrderController::class, 'destroyMultiple'])->name('order.destroy-multiple');
-    Route::resource('order', OrderController::class);
-
-     Route::get('order-get-customer-details/{id}', [OrderController::class, 'getCustomerDetails'])->name('order.get-customer-details');
-    Route::get('order-search-products', [OrderController::class, 'searchProducts'])->name('order.search-products');
- Route::get('order-get-product-details/{id}', [OrderController::class, 'getProductDetails'])->name('order.get-product-details'); // Add this
-    Route::get('slider-control', [SliderControlController::class, 'index'])->name('slider.control.index');
-    Route::post('slider-control', [SliderControlController::class, 'update'])->name('slider.control.update');
-    Route::get('slider-control/search', [SliderControlController::class, 'searchProducts'])->name('slider.control.search');
-
+// Admin Portfolio Management Group
+Route::prefix('admin/portfolio')->middleware(['auth'])->group(function () {
     
-   
+    // ১. Portfolio CRUD (Resource Route)
+    // এটি index, create, store, show, edit, update, destroy সব রাউট তৈরি করবে
+    Route::resource('projects', PortfolioController::class)->names([
+        'index'   => 'portfolio.index',
+        'create'  => 'portfolio.create',
+        'store'   => 'portfolio.store',
+        'show'    => 'portfolio.show',
+        'edit'    => 'portfolio.edit',
+        'update'  => 'portfolio.update',
+        'destroy' => 'portfolio.destroy',
+    ]);
 
+    // ২. Portfolio Header Settings
+    Route::get('/header-settings', [PortfolioController::class, 'headerSettings'])->name('portfolio.header.settings');
+    Route::post('/header-settings/update', [PortfolioController::class, 'headerUpdate'])->name('portfolio.header.update');
+});
+// Admin Service Management Group
+Route::prefix('admin/service')->middleware(['auth'])->group(function () {
     
-Route::get('ajax_brands', [BrandController::class, 'data'])->name('ajax.brand.data');
-Route::resource('brand', BrandController::class);
+    // ১. Service CRUD (Resource Route)
+    // এটি index, create, store, show, edit, update, destroy সব রাউট তৈরি করবে
+    Route::resource('items', ServiceController::class)->names([
+        'index'   => 'service.index',
+        'create'  => 'service.create',
+        'store'   => 'service.store',
+        'show'    => 'service.show',
+        'edit'    => 'service.edit',
+        'update'  => 'service.update',
+        'destroy' => 'service.destroy',
+    ]);
 
-Route::get('ajax_category', [CategoryController::class, 'data'])->name('ajax.category.data');
-Route::resource('category', CategoryController::class);
-
-Route::get('ajax_subcategory', [SubCategoryController::class, 'data'])->name('ajax.subcategory.data');
-Route::resource('subcategory', SubCategoryController::class);
-
-
-
-// Sub-Subcategory Routes
-    Route::get('get-subcategories/{categoryId}', [SubSubcategoryController::class, 'getSubcategories'])->name('get.subcategories');
-    Route::get('ajax_ub-subcategories', [SubSubcategoryController::class, 'data'])->name('ajax.sub-subcategory.data');
-    Route::resource('sub-subcategory', SubSubcategoryController::class);
-
-
-  
-
-Route::get('products/export-variants-stock', [App\Http\Controllers\Admin\ProductController::class, 'exportVariantsStock'])->name('product.export.variants');
-// Product Routes
-Route::post('products/bulk-status-update', [App\Http\Controllers\Admin\ProductController::class, 'bulkStatusUpdate'])->name('ajax.product.bulk-status-update');
-    Route::get('ajax_products', [ProductController::class, 'data'])->name('ajax.product.data');
-        Route::get('get_subcategories/{categoryId}', [ProductController::class, 'getSubcategories'])->name('get_subcategories');
-    Route::get('get-sub-subcategories/{subcategoryId}', [ProductController::class, 'getSubSubcategories'])->name('get.sub-subcategories');
-    Route::get('get-size-chart-entries/{id}', [ProductController::class, 'getSizeChartEntries'])->name('get.size-chart.entries');
-    Route::resource('product', ProductController::class);
-Route::get('ajax_products_delete', [ProductController::class, 'ajax_products_delete'])->name('ajax_products_delete');
+    // ২. Service Header Settings
+    Route::get('/header-settings', [ServiceController::class, 'headerSettings'])->name('service.header.settings');
+    Route::post('/header-settings/update', [ServiceController::class, 'headerUpdate'])->name('service.header.update');
+});
 
 
+// Admin Team Management Group
+Route::prefix('admin/team')->middleware(['auth'])->group(function () {
+    
+    // ১. Team Members (CRUD using Resource Route)
+    // এটি index, create, store, edit, update, destroy সব রাউট তৈরি করবে
+    Route::resource('members', TeamController::class)->names([
+        'index'   => 'team.index',
+        'create'  => 'team.create',
+        'store'   => 'team.store',
+        'edit'    => 'team.edit',
+        'show'    => 'team.show',
+        'update'  => 'team.update',
+        'destroy' => 'team.destroy',
+    ]);
 
+    // ২. Team Header Settings (ট্যাব সিস্টেমের জন্য)
+    Route::get('/header-settings', [TeamController::class, 'headerSettings'])->name('team.header.settings');
+    Route::post('/header-settings/update', [TeamController::class, 'headerUpdate'])->name('team.header.update');
+});
+
+// Admin Testimonial Management Group
+Route::prefix('admin/testimonial')->middleware(['auth'])->group(function () {
+    
+    // Testimonial Items (CRUD using Resource Route)
+    // এটি index, create, store, edit, update, destroy সব রাউট অটো জেনারেট করবে
+    Route::resource('items', TestimonialController::class)->names([
+        'index'   => 'testimonial.index',
+        'create'  => 'testimonial.create',
+        'store'   => 'testimonial.store',
+        'edit'    => 'testimonial.edit',
+        'update'  => 'testimonial.update',
+        'destroy' => 'testimonial.destroy',
+    ]);
+
+    // Testimonial Header Settings (ট্যাব সিস্টেমের জন্য আলাদা রাউট)
+    Route::get('/header-settings', [TestimonialController::class, 'headerSettings'])->name('testimonial.header.settings');
+    Route::post('/header-settings/update', [TestimonialController::class, 'headerUpdate'])->name('testimonial.header.update');
+});
+
+
+Route::prefix('admin/contact')->middleware(['auth'])->group(function () {
+    
+    // 1. User Messages Routes
+    Route::get('/messages', [ContactMessageController::class, 'index'])->name('contact.messages.index');
+    Route::get('/messages/{id}', [ContactMessageController::class, 'view'])->name('contact.messages.view');
+    Route::delete('/messages/{id}', [ContactMessageController::class, 'destroy'])->name('contact.messages.destroy');
+    Route::post('/messages/multi-delete', [ContactMessageController::class, 'multiDelete'])->name('contact.messages.multiDelete');
+
+    // 2. Quick Audit Routes (নতুন যুক্ত করা হয়েছে)
+    Route::get('/quick-audits', [ContactMessageController::class, 'quickAuditIndex'])->name('contact.quick_audits.index');
+    Route::get('/quick-audits/{id}', [ContactMessageController::class, 'quickAuditView'])->name('contact.quick_audits.view');
+    Route::delete('/quick-audits/{id}', [ContactMessageController::class, 'quickAuditDestroy'])->name('contact.quick_audits.destroy');
+    Route::post('/quick-audits/multi-delete', [ContactMessageController::class, 'quickAuditMultiDelete'])->name('contact.quick_audits.multiDelete');
+
+    // 3. Contact Header Settings Routes
+    Route::get('/header-settings', [ContactMessageController::class, 'headerSettings'])->name('contact.header.settings');
+    Route::post('/header-settings/update', [ContactMessageController::class, 'headerUpdate'])->name('contact.header.update');
+});
+
+
+Route::get('/general-config', [GeneralConfigController::class, 'index'])->name('general.config');
+    Route::post('/general-config/update', [GeneralConfigController::class, 'update'])->name('general.config.update');
+
+
+
+ 
 
     Route::controller(AuthController::class)->group(function () {
 
@@ -282,21 +271,6 @@ Route::get('ajax_products_delete', [ProductController::class, 'ajax_products_del
 
 
 
-Route::resource('defaultLocation', DefaultLocationController::class);
-    Route::resource('searchLog', SearchLogController::class);
-
-     Route::controller(SearchLogController::class)->group(function () {
-
-    Route::get('/ajax-table-searchLog/data','data')->name('ajax.searchLogtable.data');
-
-
-    });
-
-    Route::resource('aboutUs', AboutUsController::class);
-    Route::resource('contact', ContactController::class);
-
-    Route::resource('banner', BannerController::class);
-    Route::resource('clientSay', ClientSayController::class);
     //Route::resource('review', ReviewController::class);
     // Review Routes
     Route::resource('review', ReviewController::class);

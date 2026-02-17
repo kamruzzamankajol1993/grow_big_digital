@@ -51,7 +51,7 @@ class SettingController extends Controller
 
 
             $productImage = $request->file('image');
-            $imageName = 'profileImage'.$time_dy.$productImage->getClientOriginalName();
+            $imageName = 'profileImage'.date('YmdHis').$productImage->getClientOriginalName();
             $directory = 'public/uploads/';
             $imageUrl = $directory.$imageName;
 

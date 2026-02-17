@@ -1,0 +1,2484 @@
+/* =========================================
+   0. VARIABLES & ROOT
+   ========================================= */
+/* =========================================
+   0. VARIABLES & ROOT
+   ========================================= */
+:root {
+    --logo-green: #00a651;
+    --logo-blue: #3a3b90;
+    --primary-color: #080e32; /* Deep Dark Blue */
+    --accent-color: var(--logo-green);  /* Bright Orange-Red */
+    --dark-color: #080e32;    
+    --white: #ffffff;
+    --primary-bg: #080e32;    /* গাঢ় নীল ব্যাকগ্রাউন্ড */
+    --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+/* অডিট সেকশন অ্যাডভান্সড এনিমেশন */
+.audit-section {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 35px 45px;
+    position: relative;
+    z-index: 100;
+    overflow: hidden;
+    /* গ্লোয়িং এবং শ্যাডো ইফেক্ট */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 166, 81, 0.1); /* Logo Green Border */
+    transition: all 0.5s ease;
+}
+
+/* মাউস হোভার করলে গ্লো করবে এবং একটু উপরে উঠবে */
+.audit-section:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0, 166, 81, 0.15);
+    border-color: var(--logo-green);
+}
+
+/* ব্যাকগ্রাউন্ডে একটি হালকা এনিমেটেড গ্রেডিয়েন্ট */
+.audit-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0, 166, 81, 0.03) 0%, transparent 70%);
+    animation: rotateGradient 10s linear infinite;
+    z-index: -1;
+}
+
+@keyframes rotateGradient {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ইনপুট ফিল্ড এনিমেশন */
+.audit-section .form-control {
+    transition: all 0.3s ease-in-out;
+    border: 2px solid #f1f3f5 !important;
+}
+
+.audit-section .form-control:focus {
+    transform: scale(1.02);
+    border-color: var(--logo-green) !important;
+    box-shadow: 0 5px 15px rgba(0, 166, 81, 0.1) !important;
+}
+
+/* বাটনে পালস (Pulse) ইফেক্ট */
+.audit-section .btn-primary {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+.audit-section .btn-primary:hover {
+    letter-spacing: 1px;
+    box-shadow: 0 0 20px rgba(0, 166, 81, 0.4);
+}
+
+/* Typography & Gradient */
+.text-gradient {
+    background: linear-gradient(90deg, var(--logo-green), var(--logo-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.ls-2 { letter-spacing: 2px; }
+
+/* Image Wrapper with Floating Animation */
+.about-img-wrapper {
+    position: relative;
+    padding: 10px;
+}
+
+.main-about-img {
+    transition: transform 0.5s ease;
+    border-left: 5px solid var(--logo-green);
+}
+
+.about-img-wrapper:hover .main-about-img {
+    transform: scale(1.02);
+}
+
+/* Floating Badge */
+.floating-badge {
+    position: absolute;
+    bottom: 30px;
+    right: -20px;
+    background: white;
+    padding: 15px 25px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    animation: float 3s ease-in-out infinite;
+}
+
+.badge-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--logo-green);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    font-size: 20px;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* Custom Icon List */
+.icon-box {
+    min-width: 45px;
+    height: 45px;
+    background: rgba(0, 166, 81, 0.1);
+    color: var(--logo-green);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    transition: 0.3s;
+}
+
+.custom-list li:hover .icon-box {
+    background: var(--logo-green);
+    color: white;
+    transform: rotateY(180deg);
+}
+
+/* Scroll Reveal Classes */
+.reveal-left { opacity: 0; transform: translateX(-50px); transition: all 1s ease; }
+.reveal-right { opacity: 0; transform: translateX(50px); transition: all 1s ease; }
+
+.reveal-visible { opacity: 1 !important; transform: translate(0) !important; }
+
+/* Service Card Styling */
+.service-card {
+    background: #ffffff;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+/* 3D Hover & Glow Effect */
+.service-card:hover {
+    transform: translateY(-15px) scale(1.03);
+    box-shadow: 0 25px 60px rgba(0, 166, 81, 0.15);
+}
+
+.service-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at top right, rgba(0, 166, 81, 0.05), transparent);
+    z-index: -1;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.service-card:hover::after {
+    opacity: 1;
+}
+
+/* Icon Wrapper with Pulse Animation */
+.service-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    background: rgba(0, 166, 81, 0.1);
+    color: var(--logo-green);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 35px;
+    margin: 0 auto;
+    position: relative;
+    transition: 0.4s;
+}
+
+.service-card:hover .service-icon-wrapper {
+    background: var(--logo-green);
+    color: #fff;
+    transform: rotate(10deg);
+}
+
+/* Pulse Effect behind Icon */
+.icon-pulse {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 2px solid var(--logo-green);
+    border-radius: 20px;
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.service-card:hover .icon-pulse {
+    animation: pulseIcon 1.5s infinite;
+}
+
+@keyframes pulseIcon {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* Tags / Badges */
+.bg-soft-primary {
+    background: rgba(0, 166, 81, 0.08);
+    color: var(--logo-green);
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 10px;
+}
+
+.service-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+/* Scroll Animations */
+.reveal-fade { opacity: 0; transform: translateY(20px); transition: 1s ease; }
+.reveal-up { opacity: 0; transform: translateY(40px); transition: 1s ease; }
+.reveal-visible { opacity: 1 !important; transform: translateY(0) !important; }
+/* Portfolio Filter Styling */
+.portfolio-filters {
+    display: inline-flex;
+    background: #f8f9fa;
+    padding: 8px;
+    border-radius: 50px;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.filter-btn {
+    border: none;
+    background: transparent;
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #666;
+    transition: 0.4s;
+}
+
+.filter-btn.active {
+    background: var(--logo-green);
+    color: white;
+    box-shadow: 0 5px 15px rgba(0, 166, 81, 0.3);
+}
+
+/* Advanced Portfolio Box */
+.portfolio-box {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    background: #000;
+}
+
+.portfolio-media {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+}
+
+.portfolio-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1);
+    opacity: 0.85;
+}
+
+/* The Hover Reveal Info */
+.portfolio-info {
+    position: absolute;
+    bottom: 0; left: 0; width: 100%;
+    padding: 40px;
+    background: linear-gradient(to top, rgba(8, 14, 50, 0.95) 0%, transparent 100%);
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.portfolio-box:hover .portfolio-info {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.portfolio-box:hover .portfolio-media img {
+    transform: scale(1.1);
+    opacity: 0.6;
+}
+
+/* Play Icon Effect */
+.video-preview-icon {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    width: 80px; height: 80px;
+    background: var(--logo-green);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    opacity: 0;
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 2;
+}
+
+.portfolio-box:hover .video-preview-icon {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+/* Content Details */
+.portfolio-info .category {
+    color: var(--logo-green);
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.portfolio-info h3 {
+    color: white;
+    margin-top: 10px;
+    font-weight: 700;
+}
+
+.portfolio-info p {
+    color: rgba(255,255,255,0.7);
+    font-size: 14px;
+}
+/* Decorative Watermark */
+.bg-watermark {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 15rem;
+    font-weight: 900;
+    color: rgba(0, 166, 81, 0.03);
+    z-index: 0;
+    pointer-events: none;
+    letter-spacing: 20px;
+}
+
+/* Advanced Card Container */
+.team-card-advanced {
+    position: relative;
+    border-radius: 30px;
+    padding-bottom: 60px; /* Space for glass card */
+    transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.team-image-container {
+    position: relative;
+    border-radius: 30px;
+    overflow: hidden;
+    height: 420px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.team-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+}
+
+/* Side Social Sidebar */
+.team-social-sidebar {
+    position: absolute;
+    top: 50%;
+    right: -60px; /* Hidden initially */
+    transform: translateY(-50%);
+    background: white;
+    padding: 15px 10px;
+    border-radius: 20px 0 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: -5px 5px 15px rgba(0,0,0,0.1);
+}
+
+.team-card-advanced:hover .team-social-sidebar {
+    right: 0;
+}
+
+.team-social-sidebar a {
+    color: var(--logo-blue);
+    font-size: 1.2rem;
+    transition: 0.3s;
+}
+
+.team-social-sidebar a:hover {
+    color: var(--logo-green);
+    transform: scale(1.2);
+}
+
+/* Glassmorphism Info Card */
+.team-info-glass {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 25px;
+    border-radius: 20px;
+    text-align: left;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transform: translateY(0);
+    transition: all 0.5s ease;
+}
+
+.team-card-advanced:hover .team-info-glass {
+    transform: translateY(-20px);
+    background: white;
+}
+
+.team-info-glass .designation {
+    color: var(--logo-green);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Small Skill Tags */
+.skills-mini {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.skills-mini span {
+    font-size: 10px;
+    background: rgba(8, 14, 50, 0.05);
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-weight: 600;
+    color: var(--logo-blue);
+}
+
+.team-card-advanced:hover .team-image-container img {
+    transform: scale(1.1) rotate(-1deg);
+}
+
+/* Review Card Styling */
+.review-card {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 30px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+    margin: 20px;
+    position: relative;
+    border: 1px solid rgba(0,0,0,0.02);
+    transition: all 0.4s ease;
+}
+
+.review-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0, 166, 81, 0.1);
+}
+
+.quote-icon {
+    font-size: 50px;
+    color: var(--logo-green);
+    opacity: 0.2;
+    position: absolute;
+    top: 20px;
+    right: 30px;
+}
+
+.review-text {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+.reviewer-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.reviewer-info img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--white);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Swiper Pagination Color */
+.reviewSlider .swiper-pagination-bullet-active {
+    background: var(--logo-green);
+}
+
+/* Decorative Background Circle */
+.contact-bg-circle {
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(0, 166, 81, 0.05) 0%, transparent 70%);
+    z-index: 0;
+}
+
+/* Glassmorphism Form */
+.contact-form-advanced {
+    background: #ffffff;
+    border-radius: 30px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 166, 81, 0.1);
+    position: relative;
+    z-index: 1;
+}
+
+/* Advanced Input Groups with Floating Labels */
+.input-group-advanced {
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.input-group-advanced .form-control,
+.input-group-advanced .form-select {
+    border: none;
+    border-bottom: 2px solid #eee;
+    border-radius: 0;
+    padding: 12px 0;
+    background: transparent !important;
+    transition: all 0.3s ease;
+}
+
+.input-group-advanced label {
+    position: absolute;
+    top: 12px;
+    left: 0;
+    color: #999;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+/* Label Floating Logic */
+.input-group-advanced .form-control:focus ~ label,
+.input-group-advanced .form-control:not(:placeholder-shown) ~ label {
+    top: -10px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--logo-green);
+}
+
+.input-group-advanced .form-control:focus {
+    box-shadow: none;
+    border-color: var(--logo-green);
+}
+
+/* Icon Box Style */
+.icon-box-sm {
+    width: 45px;
+    height: 45px;
+    background: rgba(0, 166, 81, 0.1);
+    color: var(--logo-green);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+/* Glowing Button */
+.shadow-glow:hover {
+    box-shadow: 0 10px 25px rgba(0, 166, 81, 0.4);
+    transform: translateY(-3px);
+}
+
+/* Item Animation */
+.contact-item {
+    transition: 0.3s ease;
+}
+
+.contact-item:hover {
+    transform: translateX(10px);
+}
+
+/* Advanced Footer Base */
+.footer-advanced {
+    background: var(--primary-color); /* The #080e32 from your theme */
+    color: white;
+    border-top: 3px solid var(--logo-green);
+    position: relative;
+    z-index: 10;
+}
+
+.footer-text {
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+/* Footer Link Interactions */
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.footer-links a:hover {
+    color: var(--logo-green);
+    transform: translateX(8px);
+}
+
+/* Social Icon Circles */
+.footer-socials a {
+    width: 35px;
+    height: 35px;
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-socials a:hover {
+    background: var(--logo-green);
+    color: white;
+    transform: translateY(-5px);
+}
+
+/* Newsletter Input Customization */
+.footer-newsletter .form-control {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 50px 0 0 50px;
+    padding-left: 20px;
+}
+
+.footer-newsletter .form-control:focus {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+    border-color: var(--logo-green);
+}
+
+.footer-newsletter .btn {
+    border-radius: 0 50px 50px 0;
+    padding: 0 20px;
+}
+
+.footer-hr {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.footer-bottom-links a {
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-bottom-links a:hover {
+    opacity: 1 !important;
+    color: var(--logo-green);
+}
+/* Advanced Back-to-Top Progress Button */
+#progress-wrap {
+    position: fixed;
+    right: 40px;
+    bottom: 40px;
+    height: 55px;
+    width: 55px;
+    cursor: pointer;
+    display: block;
+    border-radius: 50px;
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.1);
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 400ms linear;
+    background: rgba(8, 14, 50, 0.8); /* Theme Dark Blue */
+    backdrop-filter: blur(10px);
+}
+
+#progress-wrap.active-progress {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* The Progress Ring */
+.progress-circle path { 
+    fill: none; 
+    stroke: var(--logo-green); /* Your theme green */
+    stroke-width: 4;
+    box-sizing:border-box;
+    transition: all 400ms linear;
+}
+
+#progress-wrap i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: white;
+    transition: all 0.3s ease;
+}
+/* Custom styling for the Audit Modal */
+#auditModal .modal-content {
+    background: #ffffff;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+}
+
+#auditModal .icon-box-sm {
+    background: rgba(0, 166, 81, 0.1);
+    color: var(--logo-green);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Ensure form labels work inside modal */
+#auditModal .input-group-advanced label {
+    left: 0;
+    transition: all 0.3s ease;
+}
+/* Hover Glowing & Scaling */
+#progress-wrap:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(0, 166, 81, 0.4);
+}
+
+#progress-wrap:hover i {
+    color: var(--logo-green);
+    transform: translate(-50%, -60%); /* Slight upward jump */
+}
+/* =========================================
+   1. GLOBAL STYLES 
+   ========================================= */
+body {
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+    color: var(--primary-color);
+}
+
+.section-padding {
+    padding: 80px 0;
+}
+
+/* =========================================
+   2. ADVANCED NAVBAR & HEADER 
+   ========================================= */
+
+
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--accent-color) !important;
+}
+
+/* =========================================
+   3. SIDEBAR (OFFCANVAS) 
+   ========================================= */
+.offcanvas {
+    background: var(--primary-color);
+    color: var(--white);
+    border-right: 1px solid var(--accent-color);
+}
+
+.offcanvas .nav-link:hover {
+    background: rgba(254, 76, 28, 0.1);
+    color: var(--accent-color) !important;
+}
+
+.sidebar-socials a:hover {
+    color: var(--accent-color);
+}
+
+/* =========================================
+   4. HERO SLIDER & BUTTONS
+   ========================================= */
+.hero-slide .btn-primary {
+    background: var(--accent-color);
+    border: none;
+    box-shadow: 0 4px 15px rgba(254, 76, 28, 0.3);
+}
+
+.hero-slide .btn-primary:hover {
+    background: #e63e10; /* Slightly darker orange */
+    transform: translateY(-3px) scale(1.05);
+}
+
+/* =========================================
+   5. AUDIT SECTION (HEIGHT FIX)
+   ========================================= */
+.audit-section {
+    background: var(--white);
+    border: 1px solid rgba(8, 14, 50, 0.05);
+    box-shadow: 0 20px 50px rgba(8, 14, 50, 0.1);
+}
+
+/* ইনপুট এবং বাটনের হাইট একদম সমান করার ফিক্স */
+.audit-section .form-control, 
+.audit-section .btn-primary {
+    height: 60px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border-radius: 12px;
+}
+
+.audit-section .btn-primary {
+    background: var(--accent-color);
+    border: none;
+    color: var(--white);
+    font-weight: 700;
+    transition: var(--transition);
+}
+
+.audit-section .btn-primary:hover {
+    background: var(--primary-color); /* Hover করলে নীল হবে */
+    transform: scale(0.98);
+}
+
+.audit-section .form-control:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 4px rgba(254, 76, 28, 0.1);
+}
+
+/* =========================================
+   6. SERVICE CARDS & PORTFOLIO
+   ========================================= */
+.service-card .bi {
+    color: var(--accent-color);
+}
+
+.service-card:hover {
+    border-bottom: 3px solid var(--accent-color);
+}
+
+.btn-outline-primary {
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.btn-outline-primary:hover {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+/* =========================================
+   7. FOOTER 
+   ========================================= */
+footer {
+    background: var(--primary-color) !important;
+    border-top: 2px solid var(--accent-color);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 991px) {
+    .audit-section .btn-primary {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+/* =========================================
+   1. GLOBAL STYLES 
+   ========================================= */
+body {
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+    color: var(--dark-color);
+}
+
+.section-padding {
+    padding: 80px 0;
+}
+
+/* =========================================
+   2. ADVANCED NAVBAR & HEADER 
+   ========================================= */
+/* =========================================
+   2. HEADER (NAVBAR) - BG: #080e32
+   ========================================= */
+.navbar {
+    background: white !important;
+    backdrop-filter: blur(15px);
+    border-bottom: 2px solid var(--logo-green); /* নিচে অরেঞ্জ বর্ডার */
+    min-height: 85px;
+    transition: var(--transition);
+}
+
+.navbar-nav .nav-link {
+    color: black !important; /* উজ্জ্বল সাদা লেখা */
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--accent-color) !important;
+    opacity: 1;
+}
+
+/* হেডার এর বাটন গুলোও অরেঞ্জ হবে */
+.navbar .btn {
+    background-color: var(--accent-color) !important;
+    border: none !important;
+    color: var(--white) !important;
+    font-weight: 600;
+}
+
+.navbar.navbar-scrolled {
+    min-height: 70px;
+    background: rgba(13, 110, 253, 0.95) !important;
+}
+
+.navbar-brand img {
+    height: 70px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.navbar-brand img:hover {
+    transform: scale(1.05);
+}
+
+.navbar-nav .nav-link {
+    color: black !important;
+    font-weight: 500;
+    font-size: 15px;
+    margin: 0 10px;
+    padding: 8px 0 !important;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--white) !important;
+}
+
+.navbar-nav .nav-link:hover::after {
+    width: 100%;
+}
+
+@media (max-width: 991px) {
+    .navbar {
+        min-height: 95px;
+        padding: 10px 0;
+    }
+    .navbar-brand {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .navbar-toggler {
+        position: absolute;
+        right: 20px;
+        border: 1px solid rgba(255,255,255,0.2) !important;
+        padding: 8px;
+        transition: background 0.3s;
+    }
+}
+
+/* =========================================
+   3. SIDEBAR (OFFCANVAS) 
+   ========================================= */
+.offcanvas {
+    
+    color: var(--white);
+    width: 250px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-logo {
+    height: 45px;
+    filter: brightness(0) invert(1);
+}
+
+.offcanvas .nav-link {
+    color: #dddddd !important;
+    padding: 15px 25px !important;
+    font-size: 1.1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: var(--transition);
+}
+
+.offcanvas .nav-link:hover {
+    color: var(--white) !important;
+    background: rgba(13, 110, 253, 0.15);
+    padding-left: 35px !important;
+}
+
+.sidebar-socials a {
+    color: var(--white);
+    font-size: 1.4rem;
+    transition: transform 0.3s, color 0.3s;
+    opacity: 0.8;
+}
+
+.sidebar-socials a:hover {
+    opacity: 1;
+    color: var(--primary-color);
+    transform: translateY(-5px);
+}
+
+/* =========================================
+   4. HERO SLIDER 
+   ========================================= */
+.myHeroSlider {
+    width: 100%;
+    height: 85vh;
+}
+
+.hero-slide {
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    position: relative;
+}
+
+.hero-slide::before {
+    content: '';
+    position: absolute;
+    top:0; left:0; width:100%; height:100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.4));
+}
+
+.hero-slide .container {
+    position: relative;
+    z-index: 10;
+}
+
+.swiper-slide-active h1 { animation: fadeInUp 1s both; }
+.swiper-slide-active p { animation: fadeInUp 1s both 0.3s; }
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-1 { background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200'); }
+.slide-2 { background-image: url('https://images.unsplash.com/photo-1557838923-2985c318be48?auto=format&fit=crop&w=1200'); }
+
+.hero-slide .btn {
+    padding: 10px 25px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: var(--transition);
+    border-radius: 8px;
+    text-transform: uppercase;
+}
+
+.hero-slide .btn-primary {
+    background: var(--primary-color);
+    border: none;
+    box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
+}
+
+/* =========================================
+   5. AUDIT SECTION (HEIGHT FIX)
+   ========================================= */
+.audit-section {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 35px 45px;
+    margin-top: -85px;
+    position: relative;
+    z-index: 100;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    animation: slideUpFade 1s ease-out both;
+}
+
+/* ইনপুট এবং বাটনের হাইট ফিক্স করার মূল কোড */
+.audit-section .form-control, 
+.audit-section .btn-primary {
+    height: 60px !important; /* একদম সেম হাইট নিশ্চিত করবে */
+    line-height: 60px;
+    padding-top: 0;
+    padding-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border-radius: 12px;
+}
+
+.audit-section .btn-primary {
+    min-width: 150px;
+    font-size: 15px;
+    font-weight: 700;
+    background: var(--primary-color);
+    border: none;
+    margin-top: 0;
+}
+
+.audit-section .form-control {
+    border: 2px solid #f1f3f5;
+    background: #f8f9fa;
+    transition: var(--transition);
+}
+
+.audit-section .form-control:focus {
+    transform: translateY(-2px);
+    border-color: var(--primary-color);
+    background: var(--white);
+}
+
+@keyframes slideUpFade {
+    0% { opacity: 0; transform: translateY(50px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================
+   6. SERVICE CARDS & OTHERS
+   ========================================= */
+.service-card {
+    transition: var(--transition);
+    border-radius: 20px;
+    border: none;
+    background: var(--white);
+}
+
+.service-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+.portfolio-img {
+    height: 280px;
+    object-fit: cover;
+    border-radius: 15px;
+    transition: var(--transition);
+}
+
+.team-member img {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    border: 5px solid var(--white);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.btn-primary {
+    background: var(--logo-green);
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-weight: 600;
+    border: none;
+    transition: var(--transition);
+}
+
+.footer {
+    background: var(--dark-color);
+    color: var(--white);
+}
+
+/* মোবাইল রেসপন্সিভনেস */
+@media (max-width: 991px) {
+    .audit-section {
+        padding: 25px;
+        margin-top: -60px;
+    }
+    .audit-section .form-control, 
+    .audit-section .btn-primary {
+        height: 55px !important;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+
+/* =========================================
+   HEADER & NAVIGATION FINAL FIXES
+   ========================================= */
+
+/* ১. টগল বাটন সাদা এবং সুন্দর করা */
+.navbar-toggler {
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    padding: 8px 10px;
+}
+
+.navbar-toggler-icon {
+    /* এটি আইকনটিকে পুরোপুরি সাদা করবে */
+    filter: invert(1) brightness(100%) contrast(100%) !important;
+}
+
+/* ২. হেডার বাটনগুলোর সাইজ সমান করা */
+.navbar .nav-item .btn {
+    height: 42px !important;
+    min-width: 150px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px !important;
+    font-weight: 600;
+    margin-top: 0; /* গ্যাপ কমানোর জন্য */
+}
+
+/* ৩. নেভিগেশন লিংক বোল্ড এবং হোভার ইফেক্ট */
+.navbar-nav .nav-link {
+    font-weight: 600 !important;
+    font-size: 15px;
+    transition: all 0.3s ease-in-out !important;
+}
+
+.navbar-nav .nav-link:hover {
+    transform: scale(1.1); /* হালকা বড় হবে */
+    color: var(--accent-color) !important;
+}
+
+/* ৪. অডিট সেকশনের কনফ্লিক্ট ফিক্স (পুরানো স্টাইল ওভাররাইড) */
+.audit-section {
+    margin-top: -50px !important; /* স্ক্রিনশট অনুযায়ী পজিশন ঠিক করা */
+    background: #fff;
+    padding: 2rem;
+    border-radius: 15px;
+}
+
+/* ৫. মোবাইল বাটন এডজাস্টমেন্ট */
+@media (max-width: 991px) {
+    .navbar-brand img {
+        height: 55px;
+    }
+    .navbar {
+        min-height: 85px !important;
+    }
+}
+.myHeroSlider {
+    width: 100%;
+    height: 85vh;
+    overflow: hidden; /* অতিরিক্ত অংশ যাতে না দেখা যায় */
+    perspective: 1200px; /* থ্রিডি ইফেক্টকে আরও গভীর করার জন্য */
+}
+
+.hero-slide {
+    backface-visibility: hidden; /* ফ্লিপ হওয়ার সময় পেছনের অংশ লুকানো থাকবে */
+}
+
+/* Responsive Fix for Audit Modal */
+@media (max-width: 767px) {
+    #auditModal .modal-body {
+        padding: 30px 20px !important; /* Reduced padding for mobile */
+    }
+    
+    #auditModal h2 {
+        font-size: 1.5rem !important; /* Smaller heading for mobile */
+    }
+
+    #auditModal .input-group-advanced {
+        margin-bottom: 20px; /* More breathing room between inputs */
+    }
+
+    #auditModal .btn-lg {
+        font-size: 16px !important;
+        padding: 12px !important;
+    }
+}
+
+/* Ensure the modal doesn't cut off on short screens */
+#auditModal .modal-dialog {
+    margin: 10px;
+    max-width: 100%;
+}
+
+#particleCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* কন্টেন্টের পেছনে থাকবে */
+    background-color: #ffffff; /* আপনার মূল ব্যাকগ্রাউন্ড কালার */
+    pointer-events: none;
+}
+
+
+
+/* --- Behance Refined Hero Styles --- */
+.behance-hero-refined {
+    padding: 30px 0 120px; /* নেভবার থেকে গ্যাপ কমানো হয়েছে */
+    background: transparent;
+    position: relative;
+}
+
+/* নেভবার গ্যাপ জিরো করা */
+.navbar { margin-bottom: 0 !important; }
+
+/* মূল সাদা কন্টেইনার (ফুল উইডথ নয়, কন্টেইনারের ভেতর) */
+/* মূল সাদা কন্টেইনার */
+.hero-content-card {
+    background: #ffffff;
+    border-radius: 40px;
+    position: relative;
+    /* সেকশনটিকে আরও ফুটিয়ে তোলার জন্য ডিপার শ্যাডো */
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.15) !important;
+    border: 1px solid #e0e0e0;
+}
+
+/* প্রতিটি ইমেজ কার্ডের বর্ডার এবং অনেক ডিপ শ্যাডো */
+.member-card-wrapper {
+    background: #ffffff;
+    border-radius: 25px;
+    padding: 15px;
+    position: relative;
+    /* বর্ডার কালার আরও ডিপ করা হয়েছে (স্ক্রিনশট অনুযায়ী) */
+    border: 3px solid #00a651 !important; 
+}
+
+/* ইমেজের নিচে অনেক বেশি ডিপ শ্যাডো ইফেক্ট */
+.shadow-deep {
+    box-shadow: 0 25px 50px rgba(0, 166, 81, 0.4) !important; /* ওপাসিটি ০.২২ থেকে বাড়িয়ে ০.৪ করা হয়েছে */
+    transition: transform 0.3s ease;
+}
+
+.shadow-deep:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 35px 60px rgba(0, 166, 81, 0.5) !important;
+}
+
+/* কার্ডের মাপ */
+.main-expert { width: 315px; }
+.side-expert { width: 210px; padding: 12px; }
+.member-img { width: 100%; border-radius: 20px; }
+
+/* গ্রিড বিন্যাস */
+.behance-grid-layout {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    justify-content: flex-end;
+}
+
+/* গুগল ব্যাজ পজিশনিং (ডান পাশে ওপরে) */
+.google-review-badge {
+    position: absolute;
+    top: -10px; right: -10px;
+    background: white;
+    width: 45px; height: 45px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    z-index: 10;
+    padding: 8px;
+}
+
+.google-review-badge-sm {
+    position: absolute;
+    top: -8px; right: -8px;
+    background: white;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    z-index: 10;
+    padding: 6px;
+}
+
+/* নামের নিচের সবুজ দাগ (Accent Line) */
+.accent-bar {
+    height: 4px; width: 45px;
+    background: var(--logo-green); /* আপনার ব্রান্ড গ্রিন কালার */
+    margin-top: 12px;
+    border-radius: 2px;
+}
+
+.accent-bar-sm {
+    height: 3px; width: 30px;
+    background: var(--logo-green);
+    margin-top: 8px;
+    border-radius: 2px;
+}
+
+/* ফন্ট এবং টেক্সট স্টাইল */
+.hero-main-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: #1a1a1a;
+    letter-spacing: -1.5px;
+}
+
+.hero-sub-para {
+    font-size: 1.15rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* বাটন এলাইনমেন্ট ফিক্স (মোবাইল রেস্পন্সিভ) */
+.hero-team-spotlight .btn, .behance-hero-refined .btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 52px;
+    padding: 0 30px !important;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    border-radius: 50px;
+    line-height: 1;
+}
+
+.btn-brand-solid {
+    background-color: #00a651 !important; /* আপনার ব্রান্ড গ্রিন */
+    color: #ffffff !important;
+    border: 3px solid #00a651 !important; /* ডিপ বর্ডার */
+    transition: all 0.3s ease-in-out !important;
+    font-weight: 700 !important;
+}
+
+/* হোভার করলে পুরোপুরি সাদা হওয়া রোধ করার ফিক্স */
+.btn-brand-solid:hover {
+    background-color: #007a3d !important; /* হোভার করলে আরও গাঢ় সবুজ হবে */
+    color: #ffffff !important; /* টেক্সট সাদাই থাকবে */
+    border-color: #007a3d !important;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 166, 81, 0.3);
+}
+.btn-brand-outline { border: 2px solid var(--logo-green); color: var(--logo-green) !important; }
+
+/* ফ্লোটিং স্ট্যাটাস পিলস (অর্ধেক বাইরে) */
+.hero-floating-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    position: absolute;
+    bottom: -50px; left: 0; right: 0;
+    z-index: 30;
+}
+
+/* ফ্লোটিং স্ট্যাটাস পিলস শ্যাডো আরও স্পষ্ট */
+.stat-pill {
+    background: #ffffff;
+    padding: 15px 35px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-width: 270px;
+    border: 2px solid #f0f0f0;
+}
+
+.shadow-defined {
+    /* স্ট্যাটাস বাটনগুলো যাতে স্পষ্টভাবে বোঝা যায় তার জন্য ব্ল্যাক শ্যাডো বাড়ানো হয়েছে */
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.18) !important;
+}
+
+/* গুগল ব্যাজ এবং অন্যান্য এলিমেন্ট আগের মতো থাকবে */
+.google-review-badge, .google-review-badge-sm {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15) !important;
+}
+
+.stat-pill-icon {
+    width: 48px; height: 48px;
+    background: rgba(0, 166, 81, 0.1);
+    color: var(--logo-green);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+}
+
+.stat-pill-info h4 { font-size: 24px; font-weight: 800; margin: 0; }
+.stat-pill-info span { font-size: 12px; color: #888; text-transform: uppercase; font-weight: 600; }
+
+/* মোবাইল রেস্পন্সিভনেস */
+@media (max-width: 991px) {
+    .behance-hero-refined { padding-top: 15px; }
+    .hero-main-title { font-size: 2.5rem; text-align: center; }
+    .hero-sub-para { text-align: center; }
+    .btn-flex-mobile { justify-content: center; }
+    .behance-grid-layout { flex-direction: column; align-items: center; margin-top: 30px; }
+    .hero-floating-stats { position: relative; bottom: 0; flex-direction: column; align-items: center; padding: 40px 0; }
+    .stat-pill { width: 90%; }
+}
+
+/* মোবাইল রেস্পন্সিভনেস আপডেট */
+@media (max-width: 991px) {
+    .behance-hero-refined { 
+        padding-top: 20px; 
+        padding-bottom: 60px;
+    }
+
+    /* টাইটেল সাইজ মোবাইলের জন্য ছোট করা */
+    .hero-main-title { 
+        font-size: 2.2rem !important; 
+        text-align: center;
+        letter-spacing: -1px;
+    }
+
+    .hero-sub-para { 
+        text-align: center; 
+        font-size: 1rem;
+        padding: 0 15px;
+    }
+
+    /* বাটনগুলোকে মোবাইলে সুন্দরভাবে পাশাপাশি বা নিচে সাজানো */
+    .btn-flex-mobile { 
+        justify-content: center; 
+        flex-wrap: wrap; /* ছোট স্ক্রিনে যাতে বাটন নিচে নামে */
+        gap: 10px !important;
+    }
+
+    .behance-hero-refined .btn {
+        width: 100%; /* ফুল উইডথ বাটন */
+        max-width: 280px;
+        height: 48px !important;
+        font-size: 12px !important;
+    }
+
+    /* ইমেজ গ্রিড এবং বড় ইমেজ রেস্পন্সিভ করা */
+    .behance-grid-layout { 
+        flex-direction: column !important; 
+        align-items: center !important; 
+        margin-top: 40px;
+        gap: 20px !important;
+    }
+
+    /* বড় ইমেজের বক্স রেস্পন্সিভ করা */
+    .main-expert { 
+        width: 90% !important; /* স্ক্রিন অনুযায়ী উইডথ */
+        max-width: 320px;
+        margin: 0 auto;
+    }
+
+    /* ছোট ইমেজের কলাম */
+    .side-member-stack {
+        width: 100%;
+        display: flex;
+        flex-direction: row; /* মোবাইলে পাশাপাশি দেখাবে */
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .side-expert {
+        width: 45% !important; /* স্ক্রিনের অর্ধেক জায়গা নিবে */
+        max-width: 160px;
+        padding: 10px !important;
+    }
+
+    /* স্ট্যাটাস পিলস মোবাইলে সাজানো */
+    .hero-floating-stats { 
+        position: relative !important; 
+        bottom: 0 !important; 
+        flex-direction: column !important; 
+        align-items: center !important; 
+        padding: 30px 0;
+        gap: 15px !important;
+    }
+
+    .stat-pill { 
+        width: 95% !important; 
+        min-width: unset !important;
+        padding: 12px 20px !important;
+    }
+
+    .stat-pill-info h4 {
+        font-size: 18px !important;
+    }
+}
+
+/* অতি ক্ষুদ্র স্ক্রিনের জন্য (যেমন iPhone SE) */
+@media (max-width: 480px) {
+    .side-member-stack {
+        flex-direction: column; /* একদম ছোট স্ক্রিনে আবার একটির নিচে আরেকটি */
+        align-items: center;
+    }
+    .side-expert {
+        width: 90% !important;
+        max-width: 280px;
+    }
+}
+
+/* ড্রপডাউন টেক্সট এবং অপশন গ্রুপ স্টাইল */
+.input-group-advanced .form-select {
+    border: none;
+    border-bottom: 2px solid #eee;
+    border-radius: 0;
+    padding: 12px 0;
+    background: transparent !important;
+    font-weight: 500;
+    color: #555;
+    cursor: pointer;
+}
+
+/* ক্যাটাগরি হেডারের স্টাইল (Optgroup) */
+.input-group-advanced .form-select optgroup {
+    font-weight: 700;
+    color: var(--logo-green);
+    background: #fff;
+    font-style: normal;
+    padding: 10px;
+}
+
+/* ড্রপডাউন অপশন গুলোর স্টাইল */
+.input-group-advanced .form-select option {
+    font-weight: 400;
+    color: #333;
+    background: #fff;
+    padding: 10px;
+}
+
+.input-group-advanced .form-select:focus {
+    border-color: var(--logo-green);
+    box-shadow: none;
+}
+
+/* ১. ফ্লোটিং বাটন স্টাইল */
+.floating-audit-btn {
+    position: fixed;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    transform-origin: right bottom;
+    background: var(--logo-green);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 50px 50px 0 0;
+    cursor: pointer;
+    z-index: 9999; /* সব সেকশনের উপরে থাকবে */
+    font-weight: 700;
+    letter-spacing: 1px;
+    box-shadow: -5px 0 20px rgba(0, 166, 81, 0.4);
+    transition: all 0.3s ease;
+}
+
+.floating-audit-btn:hover {
+    padding-right: 35px;
+    background: var(--primary-color);
+}
+
+/* ২. মডেল কাস্টমাইজেশন */
+.custom-audit-modal {
+    background: var(--primary-color) !important; /* আপনার থিম নীল */
+    border-radius: 30px !important;
+    border: 2px solid var(--logo-green) !important;
+}
+
+.modal-icon-header {
+    width: 80px;
+    height: 80px;
+    background: var(--logo-green);
+    color: white;
+    font-size: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: -40px auto 20px;
+    box-shadow: 0 10px 25px rgba(0, 166, 81, 0.5);
+}
+
+.audit-form .form-control, 
+.audit-form .form-select {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+    border-radius: 12px;
+    padding: 12px 15px;
+}
+
+.audit-form .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.audit-form .form-select option {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* ৩. রেসপনসিভ (মোবাইলে নিচে থাকবে) */
+@media (max-width: 768px) {
+    .floating-audit-btn {
+        top: auto;
+        bottom: 100px;
+        transform: rotate(0);
+        border-radius: 50px;
+        right: 20px;
+    }
+}
+
+/* ড্রপডাউন অপশন গ্রুপ (Category Label) গ্রীন কালার ফিক্স */
+.audit-form .form-select optgroup {
+    color: var(--logo-green) !important; /* ক্যাটাগরি নাম গ্রীন হবে */
+    font-weight: 700;
+    background: var(--primary-color); /* ব্যাকগ্রাউন্ড ডার্ক থাকবে */
+    font-style: normal;
+}
+
+/* ড্রপডাউন অপশন গুলোর টেক্সট কালার */
+.audit-form .form-select option {
+    color: #ffffff !important; /* নির্দিষ্ট সার্ভিস গুলো সাদা থাকবে */
+    background: var(--primary-color);
+}
+
+/* ড্রপডাউন সিলেক্ট করার পর মেইন টেক্সট কালার ফিক্স */
+.audit-form .form-select {
+    color: white !important;
+}
+
+/* ফোকাস অবস্থায় বর্ডার গ্রীন করা */
+.audit-form .form-select:focus {
+    border-color: var(--logo-green) !important;
+    box-shadow: 0 0 10px rgba(0, 166, 81, 0.2) !important;
+}
+
+/* মোবাইল ভার্সন ফিক্স */
+@media (max-width: 991px) {
+    .floating-audit-btn {
+        top: auto !important;
+        bottom: 0 !important; /* স্ক্রিনের একদম নিচে থাকবে */
+        right: 0 !important;
+        left: 0 !important;
+        transform: none !important;
+        width: 100%; /* ফুল উইডথ বাটন */
+        border-radius: 0; /* কোণা গোল হবে না */
+        text-align: center;
+        padding: 15px !important;
+        font-size: 16px;
+        background: var(--logo-green);
+        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* ব্যাক টু টপ বাটনটি একটু উপরে তুলে দেওয়া হলো যাতে অডিট বাটনের নিচে না চাপা পড়ে */
+    #progress-wrap {
+        bottom: 70px !important;
+    }
+}
+
+/* ড্রপডাউন স্ক্রিনের বাইরে যাওয়া রোধ করার ফিক্স */
+.audit-form .form-select {
+    width: 100% !important;
+    max-width: 100% !important;
+    word-wrap: break-word !important;
+    white-space: normal !important; /* লম্বা টেক্সট যাতে স্ক্রিনের বাইরে না যায় */
+    overflow-x: hidden !important;
+}
+
+/* অপশনগুলোর টেক্সট ব্রেকিং ফিক্স */
+.audit-form .form-select option {
+    width: 100%;
+    white-space: normal;
+}
+
+/* মোবাইল স্ক্রিনের জন্য বিশেষ সতর্কতা */
+@media (max-width: 576px) {
+    .custom-audit-modal {
+        margin: 10px !important; /* মডেলের পাশে গ্যাপ রাখবে */
+    }
+    
+    .audit-form .form-select {
+        font-size: 14px !important; /* ছোট স্ক্রিনে টেক্সট সাইজ মানানসই করা */
+    }
+}
+
+/* মডালের ভেতর ড্রপডাউন যাতে নিচে ঢাকা না পড়ে */
+.custom-audit-modal .modal-body {
+    overflow-y: visible !important; /* বডি যাতে কন্টেন্ট না কাটে */
+    padding-bottom: 80px !important; /* নিচে অতিরিক্ত জায়গা যাতে ড্রপডাউন শো করে */
+}
+
+/* সিলেক্ট ট্যাগ এবং ড্রপডাউন লিস্টের পজিশনিং */
+.audit-form .form-select {
+    position: relative;
+    z-index: 1051; /* যাতে এটি ফিক্সড বাটনের উপরে থাকে */
+    cursor: pointer;
+}
+
+/* মোবাইল ভার্সনে ড্রপডাউনটি যাতে স্ক্রিনের ভেতরে থাকে */
+@media (max-width: 991px) {
+    /* ড্রপডাউন অপশনগুলো যাতে বাটনের নিচে না যায় */
+    .audit-form .form-select option, 
+    .audit-form .form-select optgroup {
+        background-color: var(--primary-color) !important;
+        color: white !important;
+    }
+
+    /* ফিক্সড বাটনের ইনডেক্স কমিয়ে দেওয়া যাতে ড্রপডাউন উপরে থাকে */
+    .floating-audit-btn {
+        z-index: 1040 !important; 
+    }
+
+    /* মডালের সর্বোচ্চ উচ্চতা নির্ধারণ যাতে স্ক্রল করা যায় */
+    .custom-audit-modal {
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+}
+/* ১. মডালের বডি এবং হাইট ফিক্স */
+.custom-audit-modal {
+    max-height: 85vh !important; /* স্ক্রিনের ৮৫% জায়গা নিবে */
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-audit-modal .modal-body {
+    overflow-y: auto !important; /* স্ক্রল এনাবল করা হলো */
+    padding-right: 15px !important; /* স্ক্রলবারের জন্য একটু জায়গা */
+    scrollbar-width: thin; /* ফায়ারফক্সের জন্য */
+    scrollbar-color: var(--logo-green) rgba(255, 255, 255, 0.1);
+}
+
+/* ২. কাস্টম স্ক্রলবার স্টাইল (Chrome, Safari, Edge এর জন্য) */
+.custom-audit-modal .modal-body::-webkit-scrollbar {
+    width: 6px; /* স্ক্রলবারটি একটু চিকন ও সুন্দর দেখাবে */
+    display: block !important; /* যাতে সবসময় দেখা যায় */
+}
+
+.custom-audit-modal .modal-body::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05); /* ট্র্যাকের কালার */
+    border-radius: 10px;
+}
+
+.custom-audit-modal .modal-body::-webkit-scrollbar-thumb {
+    background: var(--logo-green); /* স্ক্রলবারের হ্যান্ডেল গ্রিন কালার */
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ৩. ইউজারকে বোঝানোর জন্য একটি ইন্ডিকেটর (Optional) */
+.custom-audit-modal .modal-body::after {
+    content: "Scroll for more ↓";
+    display: block;
+    text-align: center;
+    font-size: 10px;
+    color: var(--logo-green);
+    opacity: 0.6;
+    margin-top: 15px;
+    padding-bottom: 10px;
+}
+
+/* মোবাইল ভিউতে মডাল স্পেসিং */
+@media (max-width: 576px) {
+    .custom-audit-modal {
+        margin: 15px !important;
+    }
+    .modal-body {
+        padding: 25px 20px !important;
+    }
+}
+
+/* ১. স্ক্রলবার পুরুত্ব (Width) বাড়ানো হলো */
+.custom-audit-modal .modal-body::-webkit-scrollbar {
+    width: 12px; /* পুরুত্ব ৬px থেকে বাড়িয়ে ১২px করা হয়েছে */
+    display: block !important;
+}
+
+/* ২. স্ক্রলবার ট্র্যাক (পেছনের অংশ) */
+.custom-audit-modal .modal-body::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1); /* ট্র্যাকটি একটু বেশি দৃশ্যমান করা হলো */
+    border-radius: 10px;
+    margin: 10px 0; /* ওপর-নিচে সামান্য গ্যাপ */
+}
+
+/* ৩. স্ক্রলবার থাম্ব (যেটা দিয়ে স্ক্রল করা হয়) */
+.custom-audit-modal .modal-body::-webkit-scrollbar-thumb {
+    background: var(--logo-green); /* আপনার ব্র্যান্ডের গ্রিন কালার */
+    border-radius: 10px;
+    border: 3px solid #080e32; /* থাম্বের চারপাশে বর্ডার দিয়ে এটিকে আলাদা করা হয়েছে */
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+/* ৪. থাম্ব হোভার ইফেক্ট (মাউস নিলে কালার গাঢ় হবে) */
+.custom-audit-modal .modal-body::-webkit-scrollbar-thumb:hover {
+    background: #008f45; /* একটু গাঢ় গ্রিন */
+}
+
+/* ৫. মডাল কন্টেন্ট প্যাডিং ঠিক করা */
+.custom-audit-modal .modal-body {
+    padding-right: 20px !important; /* পুরু স্ক্রলবারের জন্য প্যাডিং বাড়ানো হলো */
+}
+
+
+
+/* ১. স্ক্রলবার পুরুত্ব ১৬px করা হলো */
+.custom-audit-modal .modal-body::-webkit-scrollbar {
+    width: 16px; 
+    display: block !important;
+}
+
+/* ২. স্ক্রলবার ট্র্যাক ডিজাইন */
+.custom-audit-modal .modal-body::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.08); 
+    border-radius: 12px;
+    margin: 5px;
+}
+
+/* ৩. স্ক্রলবার থাম্ব (যেটা ইউজার ধরবে) */
+.custom-audit-modal .modal-body::-webkit-scrollbar-thumb {
+    background: var(--logo-green); 
+    border-radius: 12px;
+    /* ডার্ক বর্ডার দিয়ে থাম্বটিকে ট্র্যাক থেকে আলাদা করা হয়েছে */
+    border: 4px solid #080e32; 
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+/* ৪. থাম্ব হোভার এবং একটিভ ইফেক্ট */
+.custom-audit-modal .modal-body::-webkit-scrollbar-thumb:hover {
+    background: #008f45;
+}
+
+.custom-audit-modal .modal-body::-webkit-scrollbar-thumb:active {
+    background: #007a3d; /* ক্লিক করলে আরও গাঢ় হবে */
+}
+
+/* ৫. মডাল কন্টেন্ট প্যাডিং */
+.custom-audit-modal .modal-body {
+    padding-right: 25px !important; /* স্ক্রলবার চওড়া হওয়ায় প্যাডিং বাড়ানো হলো */
+    overflow-x: hidden; /* সাইড স্ক্রল যাতে না আসে */
+}
+
+/* মোবাইল ভার্সনে Explore Our Craft বাটনটি সেন্টার করার জন্য */
+@media (max-width: 991px) {
+    #about .col-lg-6 {
+        text-align: center !important; /* হেডিং এবং প্যারাগ্রাফ মাঝখানে আনবে */
+    }
+
+    #about .custom-list li {
+        text-align: left; /* লিস্টের ভেতরের লেখাগুলো বামেই রাখবে যাতে দেখতে সুন্দর লাগে */
+    }
+
+    #about .btn-primary {
+        margin-left: auto;
+        margin-right: auto;
+        display: inline-flex !important; /* বাটনটি মাঝখানে সেট করবে */
+        margin-top: 25px !important;
+    }
+}
+
+/* ১. সার্ভিস ট্যাগগুলোর মেইন ডিজাইন */
+.bg-soft-primary {
+    background: rgba(0, 166, 81, 0.1) !important; /* হালকা গ্রিন ব্যাকগ্রাউন্ড */
+    color: var(--logo-green) !important; /* স্পষ্ট গ্রিন টেক্সট */
+    font-weight: 700 !important;
+    font-size: 12px !important;
+    padding: 8px 16px !important;
+    border-radius: 50px !important; /* পুরোপুরি রাউন্ড শেপ */
+    border: 1px solid rgba(0, 166, 81, 0.2) !important; /* হালকা বর্ডার */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+/* ২. হোভার করলে কালার সলিড হবে */
+.bg-soft-primary:hover {
+    background: var(--logo-green) !important;
+    color: #ffffff !important;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 166, 81, 0.3);
+}
+
+/* ৩. ক্যাটাগরি লিস্টের এলাইনমেন্ট */
+.service-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* ৪. মডালের ড্রপডাউনের ভেতরে ক্যাটাগরি লেবেল ফিক্স */
+.audit-form .form-select optgroup {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--logo-green) !important;
+    background: #080e32;
+    padding: 10px;
+    text-transform: uppercase;
+}
+
+
+/* WhatsApp Floating Button Style */
+.whatsapp-float {
+    position: fixed;
+    width: 55px;
+    height: 55px;
+    bottom: 40px;
+    right: 105px; /* Progress wrap থেকে বামে রাখার জন্য (55px + gap) */
+    background-color: #25d366;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.whatsapp-float:hover {
+    background-color: #128c7e;
+    transform: scale(1.1);
+    color: #fff;
+}
+
+/* মোবাইল ভার্সন এডজাস্টমেন্ট */
+@media (max-width: 991px) {
+    .whatsapp-float {
+        bottom: 80px; /* আপনার অডিট বাটনের উপরে রাখার জন্য */
+        right: 85px;
+        width: 50px;
+        height: 50px;
+        font-size: 25px;
+    }
+}
+
+/* =========================================
+   PORTFOLIO SECTION - REFINED DESIGN
+   ========================================= */
+
+/* ১. মেইন এবং সাব ফিল্টার বাটন স্টাইল */
+.portfolio-filters {
+    display: inline-flex;
+    background: #f8f9fa;
+    padding: 6px;
+    border-radius: 50px;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.filter-btn {
+    border: none;
+    background: transparent;
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #666;
+    transition: all 0.3s ease;
+}
+
+.filter-btn.active {
+    background: var(--logo-green);
+    color: white !important;
+    box-shadow: 0 5px 15px rgba(0, 166, 81, 0.3);
+}
+
+/* সাব-ফিল্টার কন্টেইনার */
+.sub-filters {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 15px;
+}
+
+.active-flex { display: flex !important; }
+
+.sub-btn {
+    border: 1px solid rgba(0, 166, 81, 0.3);
+    background: #fff;
+    color: #444;
+    padding: 6px 20px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.sub-btn.active, .sub-btn:hover {
+    background: var(--logo-green);
+    color: white !important;
+    border-color: var(--logo-green);
+}
+
+/* ২. পোর্টফোলিও বক্স ও কার্ড ডিজাইন (আপনার ছবির মতো) */
+.portfolio-box {
+    position: relative;
+    border-radius: 30px; /* আপনার স্ক্রিনশটের মতো হাই-রাউন্ডেড কোণা */
+    overflow: hidden;
+    height: 350px; /* কার্ডের আদর্শ উচ্চতা */
+    background: #000;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    transition: transform 0.4s ease;
+}
+
+.portfolio-box:hover {
+    transform: translateY(-10px);
+}
+
+.portfolio-media {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.portfolio-media iframe, 
+.portfolio-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* ইমেজ বা ভিডিও যাতে স্ট্রেচ না হয় */
+    display: block;
+}
+
+/* ৩. ডার্ক ওভারলে এবং টেক্সট ইনফো */
+.portfolio-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* নিচ থেকে ওপরের দিকে কালো শেড */
+    background: linear-gradient(to top, rgba(8, 14, 50, 0.95) 0%, rgba(8, 14, 50, 0.4) 40%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 30px;
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* যাতে ওভারলে থাকলেও ভিডিওতে ক্লিক করা যায় */
+}
+
+/* ৪. প্লে বাটন - আপনার ছবির মতো গ্রিন সার্কেল */
+.play-btn-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70px;
+    height: 70px;
+    background: var(--logo-green); /* আপনার ব্র্যান্ড গ্রিন */
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 0 25px rgba(0, 166, 81, 0.6);
+    z-index: 5;
+    transition: all 0.3s ease;
+}
+
+.portfolio-box:hover .play-btn-circle {
+    transform: translate(-50%, -50%) scale(1.15);
+}
+
+/* ৫. টেক্সট ডিটেইলস (টাইটেল ও ডেসক্রিপশন) */
+.overlay-info .cat-tag {
+    color: var(--logo-green);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.overlay-info .work-title {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    line-height: 1.2;
+}
+
+.overlay-info .work-desc {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 13px;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* লোডিং এনিমেশন */
+#portfolio-display {
+    transition: opacity 0.4s ease-in-out;
+}
+
+/* মোবাইল রেসপন্সিভনেস */
+@media (max-width: 991px) {
+    .sub-filters {
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .portfolio-box {
+        height: 280px;
+    }
+    .overlay-info .work-title {
+        font-size: 20px;
+    }
+}
+
+/* কার্ডের আকার ও ডিজাইন স্ক্রিনশট অনুযায়ী */
+.portfolio-box {
+    position: relative;
+    border-radius: 25px; /* ইমেজের মতো রাউন্ডেড কোণা */
+    overflow: hidden;
+    height: 400px; /* ২ কলামের জন্য উচ্চতা বাড়ানো হয়েছে */
+    background: #000;
+    margin-bottom: 10px;
+}
+
+/* আপনার স্ক্রিনশটের মতো ডার্ক গ্রেডিয়েন্ট মাস্ক */
+.portfolio-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    /* নিচ থেকে টেক্সট এরিয়া পর্যন্ত কালো মাস্ক */
+    background: linear-gradient(to top, rgba(8, 14, 50, 1) 0%, rgba(8, 14, 50, 0.6) 30%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 35px; /* বেশি স্পেসিং */
+    pointer-events: none;
+}
+
+/* সবুজ ক্যাটাগরি ট্যাগ স্টাইল */
+.overlay-info .cat-tag {
+    color: #00a651 !important; /* স্ক্রিনশটের সেই উজ্জ্বল সবুজ */
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* টাইটেল স্টাইল (মোটা এবং সাদা) */
+.overlay-info .work-title {
+    color: #ffffff;
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0 0 5px 0;
+    letter-spacing: -0.5px;
+}
+
+/* ডেসক্রিপশন স্টাইল */
+.overlay-info .work-desc {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    margin: 0;
+}
+
+/* মাঝখানের গ্রিন প্লে বাটন */
+.play-btn-circle {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 75px; height: 75px;
+    background: #00a651;
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 35px;
+    z-index: 5;
+    box-shadow: 0 0 30px rgba(0, 166, 81, 0.4);
+}
+
+/* মোবাইল ভার্সন এডজাস্টমেন্ট */
+@media (max-width: 991px) {
+    /* হোয়াটসঅ্যাপ বাটন পজিশন */
+    .whatsapp-float {
+        bottom: 80px !important; /* ফ্রি অডিট বাটনের উপরে থাকবে */
+        right: 80px !important;  /* ব্যাক-টু-টপ বাটনের বামে থাকবে */
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 25px !important;
+    }
+
+    /* ব্যাক-টু-টপ বাটন পজিশন */
+    #progress-wrap {
+        bottom: 80px !important; /* হোয়াটসঅ্যাপের সাথে একই লেভেলে থাকবে */
+        right: 20px !important;  /* স্ক্রিনের একদম ডান পাশে */
+        width: 50px !important;
+        height: 50px !important;
+    }
+}
+
+/* অতি ক্ষুদ্র স্ক্রিনের জন্য (iPhone SE বা ছোট ফোন) */
+@media (max-width: 375px) {
+    .whatsapp-float {
+        right: 75px !important;
+    }
+}
+
+/* মোবাইল ভার্সনে ফুটার সেকশন সেন্টার করার জন্য */
+@media (max-width: 991px) {
+    .footer-advanced {
+        text-align: center !important; /* সব লেখা মাঝখানে নিয়ে আসবে */
+        padding-top: 40px !important;
+    }
+
+    /* লোগোর পজিশন এবং সাইজ ঠিক করা */
+    .footer-advanced .navbar-brand {
+        display: block !important;
+        margin: 0 auto 20px auto !important; /* লোগো মাঝখানে আনবে এবং নিচে গ্যাপ দিবে */
+        text-align: center;
+    }
+
+    .footer-advanced .navbar-brand img {
+        height: 50px !important; /* মোবাইলে লোগো একটু ছোট করা হয়েছে */
+        width: auto;
+    }
+
+    /* সোশ্যাল আইকনগুলো মাঝখানে আনা */
+    .footer-socials {
+        justify-content: center !important;
+        display: flex;
+        margin-top: 20px;
+        margin-bottom: 30px;
+    }
+
+    /* কুইক লিঙ্ক এবং এক্সপার্টাইজ হেডিংগুলো সেন্টার করা */
+    .footer-advanced h5 {
+        margin-top: 25px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .footer-links {
+        padding: 0;
+        list-style: none;
+    }
+
+    .footer-links li {
+        text-align: center;
+    }
+
+    .footer-links a:hover {
+        transform: none !important; /* মোবাইলে সাইড ট্রানজিশন বন্ধ করা হয়েছে */
+    }
+
+    /* কপিরাইট এরিয়া সেন্টার করা */
+    .footer-advanced .text-md-start, 
+    .footer-advanced .text-md-end {
+        text-align: center !important;
+        margin-top: 15px;
+    }
+}
+
+/* মোবাইল এবং ট্যাবলেট ভার্সন ফিক্স (991px এর নিচে) */
+@media (max-width: 991px) {
+    .footer-advanced {
+        text-align: center !important; /* সব কন্টেন্ট মাঝখানে নিয়ে আসবে */
+    }
+
+    /* লোগো সেকশন ফিক্স */
+    .footer-advanced .navbar-brand {
+        display: block !important;
+        margin: 0 auto 25px auto !important; /* লোগো সেন্টার করবে এবং নিচে গ্যাপ দিবে */
+        width: fit-content;
+    }
+
+    .footer-advanced .navbar-brand img {
+        height: 50px !important; /* মোবাইলে লোগো সাইজ কিছুটা ছোট করা হয়েছে */
+    }
+
+    .footer-text {
+        padding: 50px 15px; /* টেক্সট যাতে স্ক্রিনের বর্ডারে লেগে না যায় */
+        margin-bottom: 25px !important;
+    }
+
+    /* সোশ্যাল আইকনগুলো মাঝখানে আনা */
+    .footer-socials {
+        display: flex;
+        justify-content: center !important;
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    /* কুইক লিঙ্ক এবং অন্যান্য কলামগুলোর প্যাডিং */
+    .footer-advanced .col-md-6 {
+        margin-bottom: 30px;
+    }
+
+    .footer-advanced h5 {
+        margin-bottom: 20px !important;
+        text-align: center;
+    }
+
+    .footer-links li {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    /* কপিরাইট এবং বটম লিঙ্ক ফিক্স */
+    .footer-advanced .text-md-start, 
+    .footer-advanced .text-md-end {
+        text-align: center !important;
+    }
+
+    .footer-bottom-links {
+        margin-top: 15px;
+        justify-content: center;
+        display: flex;
+    }
+}
+
+@media (max-width: 991px) {
+    /* ফুটারের নিচের অংশে অতিরিক্ত প্যাডিং যোগ করা */
+    .footer-advanced {
+        padding-bottom: 60px !important; /* যাতে লিঙ্কগুলো কুইক অডিট বাটনের উপরে থাকে */
+    }
+
+    /* বটম লিঙ্কগুলোর স্টাইল */
+    .footer-bottom-links {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .footer-bottom-links a {
+        color: #ffffff !important;
+        opacity: 1 !important; /* মোবাইল ভার্সনে স্বচ্ছতা কমিয়ে দৃশ্যমানতা বাড়ানো */
+        font-weight: 500;
+    }
+}
+
