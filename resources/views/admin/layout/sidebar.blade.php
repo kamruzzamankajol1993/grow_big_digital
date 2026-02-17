@@ -185,31 +185,36 @@
 
         <div class="sidebar-label"  style="color:#008541 !important;font-weight:bold;">Setting</div>
         
-        <div class="nav-item">
-            <a class="nav-link {{ Route::is('general.config') || Route::is('socialLink.index') ? '' : 'collapsed' }}" 
-               data-bs-toggle="collapse" 
-               href="#configSub" 
-               aria-expanded="{{ Route::is('general.config') || Route::is('socialLink.index') ? 'true' : 'false' }}">
-                <i class="bi bi-gear"></i> <span>Site Settings</span>
-                <i class="bi bi-chevron-down ms-auto small"></i>
-            </a>
-            
-            <div class="collapse {{ Route::is('general.config') || Route::is('socialLink.index') ? 'show' : '' }}" 
-                 id="configSub" 
-                 data-bs-parent="#sidebarAccordion">
-                <ul class="submenu">
-                    <li>
-                        <a href="{{ route('general.config') }}" class="{{ Route::is('general.config') ? 'active' : '' }}">
-                            <i class="bi bi-sliders2 me-2"></i> General Configuration
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('socialLink.index') }}" class="{{ Route::is('socialLink.index') ? 'active' : '' }}">
-                            <i class="bi bi-share me-2"></i> Social Links
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+      <div class="nav-item">
+    <a class="nav-link {{ Route::is('general.config') || Route::is('socialLink.index') || Request::is('extraPage*') ? '' : 'collapsed' }}" 
+       data-bs-toggle="collapse" 
+       href="#configSub" 
+       aria-expanded="{{ Route::is('general.config') || Route::is('socialLink.index') || Request::is('extraPage*') ? 'true' : 'false' }}">
+        <i class="bi bi-gear"></i> <span>Site Settings</span>
+        <i class="bi bi-chevron-down ms-auto small"></i>
+    </a>
+    
+    <div class="collapse {{ Route::is('general.config') || Route::is('socialLink.index') || Request::is('extraPage*') ? 'show' : '' }}" 
+         id="configSub" 
+         data-bs-parent="#sidebarAccordion">
+        <ul class="submenu">
+            <li>
+                <a href="{{ route('general.config') }}" class="{{ Route::is('general.config') ? 'active' : '' }}">
+                    <i class="bi bi-sliders2 me-2"></i> General Configuration
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('socialLink.index') }}" class="{{ Route::is('socialLink.index') ? 'active' : '' }}">
+                    <i class="bi bi-share me-2"></i> Social Links
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('extraPage.index') }}" class="{{ Request::is('extraPage*') ? 'active' : '' }}">
+                    <i class="bi bi-file-earmark-text me-2"></i> Extra Pages
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
     </div>
 </aside>

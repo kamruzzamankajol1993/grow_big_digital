@@ -29,12 +29,7 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrapFive();
         
 
-        // Polymorphic Relations
-        Relation::morphMap([
-            'offer' => 'App\Models\Offer',
-            'service' => 'App\Models\Service',
-        ]);
-
+       
         /**
          * Share data with all views safely.
          * Using Schema::hasTable prevents errors during initial migrations.
@@ -56,15 +51,7 @@ class AppServiceProvider extends ServiceProvider
             }
             $view->with('social_links', $social_links);
 
-            // 3. Fetch Header Categories safely
-            $header_categories = collect();
-            if (Schema::hasTable('categories')) {
-                $header_categories = Category::whereNull('parent_id')
-                                             ->where('status', 1)
-                                             ->with('brands')
-                                             ->get();
-            }
-            $view->with('header_categories', $header_categories);
+          
         });
     }
 }

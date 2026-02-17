@@ -23,9 +23,7 @@ use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\PortfolioController;
 use App\Http\Controllers\Admin\WhoWeAreController;
 use App\Http\Controllers\Admin\HeroController;
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+
 
 Route::get('/clear', function() {
     \Illuminate\Support\Facades\Artisan::call('cache:clear');
@@ -50,63 +48,12 @@ Route::get('/user/order-print/{id}', 'orderPrint')->name('front.order.print');
     Route::get('/contact-us', 'contactUs')->name('front.contactUs');
     Route::post('/contact-us-post', 'contactUsPost')->name('front.contactUsPost');
     Route::get('/services', 'services')->name('front.services');
-
-    // --- Cart / Quote Request Routes ---
-    Route::post('/add-to-cart', 'addToCart')->name('front.addToCart');
-    Route::get('/get-cart-content', 'getCartContent')->name('front.getCartContent');
-    Route::post('/update-cart-qty', 'updateCartQty')->name('front.updateCartQty');
-    Route::post('/remove-from-cart', 'removeFromCart')->name('front.removeFromCart');
-
-    // --- নতুন ২ টি রাউট ---
-    // ১. যদি ক্যাটাগরির ব্র্যান্ড/কোম্পানি থাকে
-    Route::get('/category/companies/{slug}', 'categoryWiseCompanies')->name('front.category.companies');
-
-    // ২. যদি ক্যাটাগরির ব্র্যান্ড না থাকে (সরাসরি প্রোডাক্ট)
-    Route::get('/category/products/{slug}', 'categoryWiseProducts')->name('front.category.products');
-
-
-    // ১. যদি কোম্পানির ক্যাটাগরি থাকে: কোম্পানির ক্যাটাগরি লিস্ট পেজ
-    Route::get('/company/{slug}/categories', 'companyWiseCategories')->name('front.company.categories');
-
-    // ২. যদি কোম্পানির ক্যাটাগরি না থাকে: সরাসরি কোম্পানির প্রোডাক্ট পেজ
-    Route::get('/company/{slug}/products', 'companyWiseProducts')->name('front.company.products');
-
-    Route::get('/product-details/{slug}', 'productDetails')->name('front.product.details');
-
-
-    // ২. যদি সাব-ক্যাটাগরি থাকে: সেই সাব-ক্যাটাগরিগুলো দেখানোর রাউট
-    Route::get('/company/category/{slug}/sub-categories', 'companyCategorySubCategories')->name('front.company.category.subcategories');
-
-    // ৩. যদি সাব-ক্যাটাগরি না থাকে: সরাসরি প্রোডাক্ট দেখানোর রাউট
-    Route::get('/company/category/{slug}/products', 'companyCategoryProducts')->name('front.company.category.products');
-
-   }); 
-
-
-//frontend part end
-
-// Highlight Product Routes
-    Route::get('highlight-product', [HighlightProductController::class, 'index'])->name('highlight-product.index');
-    Route::post('highlight-product', [HighlightProductController::class, 'store'])->name('highlight-product.store');
-
-    // Homepage Section Routes (Single Page)
-    Route::get('homepage-section', [App\Http\Controllers\Admin\HomepageSectionController::class, 'index'])->name('homepage-section.index');
-    Route::post('homepage-section', [App\Http\Controllers\Admin\HomepageSectionController::class, 'update'])->name('homepage-section.update');
-
+});
+  
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::post('/payment/success', [FrontController::class, 'paymentSuccess'])->name('payment.success');
-Route::post('/payment/fail', [FrontController::class, 'paymentFail'])->name('payment.fail');
-Route::post('/payment/cancel', [FrontController::class, 'paymentCancel'])->name('payment.cancel');
 
-Route::resource('customerPersonalTicket', CustomerPersonalController::class);
-
-Route::controller(CustomerPersonalController::class)->group(function () {
-    Route::get('/customerGeneralTicketPdf/{id}', 'customerGeneralTicketPdf')->name('customerGeneralTicketPdf');
-Route::get('/customerPersonalTicketPdf/{id}', 'customerPersonalTicketPdf')->name('customerPersonalTicketPdf');
-    Route::get('/customerPersonalTicket', 'customerPersonalTicket')->name('customerPersonalTicket');
-});
 Route::controller(LoginController::class)->group(function () {
 
     Route::get('/admin_login_page', 'viewLoginPage')->name('viewLoginPage');

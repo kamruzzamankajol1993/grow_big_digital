@@ -1,7 +1,7 @@
-@extends('admin.master.master')
+@extends('admin.layout.master')
 
 @section('title')
-Manage Extra Pages | {{ $ins_name ?? 'Your App Name' }}
+Manage Extra Pages 
 @endsection
 
 @section('css')
@@ -92,8 +92,7 @@ Manage Extra Pages | {{ $ins_name ?? 'Your App Name' }}
 @endsection
 
 @section('body')
-<main class="main-content">
-    <div class="container-fluid">
+
 
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -146,8 +145,7 @@ Manage Extra Pages | {{ $ins_name ?? 'Your App Name' }}
             </form>
         </div>
     </div>
-</div>
-</main>
+
 @endsection
 
 @section('script')
