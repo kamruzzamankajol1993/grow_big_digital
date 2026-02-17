@@ -4,7 +4,6 @@
 
 @section('css')
 <style>
-    .custom-width { max-width: 900px; margin: 0 auto; }
     .preview-box { width: 150px; height: 150px; border: 2px dashed #00a651; border-radius: 15px; overflow: hidden; }
     .preview-box img { width: 100%; height: 100%; object-fit: cover; }
     .skill-badge { background: #eef2ff; color: #4f46e5; padding: 5px 12px; border-radius: 20px; font-size: 13px; display: inline-flex; align-items: center; gap: 5px; margin: 5px; }
@@ -29,7 +28,7 @@
                             <label class="form-label fw-bold">Profile Image</label>
                             <div class="d-flex align-items-center gap-4">
                                 <div class="preview-box">
-                                    <img src="{{ asset($member->image) }}" id="imagePreview">
+                                    <img src="{{ asset('public/'.$member->image) }}" id="imagePreview">
                                 </div>
                                 <input type="file" name="image" class="form-control" id="imageInput" accept="image/*">
                             </div>

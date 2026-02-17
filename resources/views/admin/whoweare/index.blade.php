@@ -4,7 +4,7 @@
 
 @section('css')
 <style>
-    .custom-width { max-width: 1000px; margin: 0 auto; }
+    
     .feature-item { 
         background: #f8fafc; border: 1px solid #e2e8f0; 
         border-radius: 15px; padding: 20px; position: relative; transition: 0.3s;
@@ -63,12 +63,15 @@
                             <label class="form-label fw-bold">Short Description</label>
                             <textarea name="short_description" class="form-control" rows="3">{{ $data->short_description ?? '' }}</textarea>
                         </div>
-
+<div class="col-md-12">
+                            <label class="fw-bold small text-success">Edit Count Text</label>
+                            <input type="text" name="edit_count_text" value="{{ $data->edit_count_text ?? '' }}" class="form-control" placeholder="e.g. 12+ Years Experience">
+                        </div>
                         <div class="col-md-6">
                             <label class="form-label fw-bold">Section Image (800x533px)</label>
                             <input type="file" name="image" class="form-control mb-2">
                             @if(isset($data->image))
-                                <img src="{{ asset($data->image) }}" class="rounded shadow-sm" style="height: 80px;">
+                                <img src="{{ asset('public/'.$data->image) }}" class="rounded shadow-sm" style="height: 80px;">
                             @endif
                         </div>
 

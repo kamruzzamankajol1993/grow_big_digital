@@ -17,7 +17,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = GrowBigService::with('parent')->latest()->paginate(15);
+        $services = GrowBigService::with('parent')->latest()->paginate(10);
         return view('admin.service.index', compact('services'));
     }
 

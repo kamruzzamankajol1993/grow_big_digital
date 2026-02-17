@@ -26,34 +26,7 @@
         <i class="bi bi-info-square"></i> <span>Who We Are</span>
     </a>
 </div>
-        <div class="nav-item">
-    <a class="nav-link {{ Request::is('admin/portfolio*') ? '' : 'collapsed' }}" 
-       data-bs-toggle="collapse" 
-       href="#portfolioSub"
-       aria-expanded="{{ Request::is('admin/portfolio*') ? 'true' : 'false' }}">
-        <i class="bi bi-collection-play"></i> <span>Portfolio</span>
-        <i class="bi bi-chevron-down ms-auto small"></i>
-    </a>
-    <div class="collapse {{ Request::is('admin/portfolio*') ? 'show' : '' }}" 
-         id="portfolioSub" 
-         data-bs-parent="#sidebarAccordion">
-        <ul class="submenu">
-            <li>
-                <a href="{{ route('portfolio.index') }}" 
-                   class="{{ Request::is('admin/portfolio/projects*') ? 'active' : '' }}">
-                    <span>All Projects</span>
-                </a>
-            </li>
 
-            <li>
-                <a href="{{ route('portfolio.header.settings') }}" 
-                   class="{{ Request::is('admin/portfolio/header-settings*') ? 'active' : '' }}">
-                    <span>Header Settings</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-</div>
 <div class="nav-item">
     <a class="nav-link {{ Request::is('admin/service*') ? '' : 'collapsed' }}" 
        data-bs-toggle="collapse" 
@@ -82,6 +55,35 @@
         </ul>
     </div>
 </div>
+        <div class="nav-item">
+    <a class="nav-link {{ Request::is('admin/portfolio*') ? '' : 'collapsed' }}" 
+       data-bs-toggle="collapse" 
+       href="#portfolioSub"
+       aria-expanded="{{ Request::is('admin/portfolio*') ? 'true' : 'false' }}">
+        <i class="bi bi-collection-play"></i> <span>Portfolio</span>
+        <i class="bi bi-chevron-down ms-auto small"></i>
+    </a>
+    <div class="collapse {{ Request::is('admin/portfolio*') ? 'show' : '' }}" 
+         id="portfolioSub" 
+         data-bs-parent="#sidebarAccordion">
+        <ul class="submenu">
+            <li>
+                <a href="{{ route('portfolio.index') }}" 
+                   class="{{ Request::is('admin/portfolio/projects*') ? 'active' : '' }}">
+                    <span>All Projects</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('portfolio.header.settings') }}" 
+                   class="{{ Request::is('admin/portfolio/header-settings*') ? 'active' : '' }}">
+                    <span>Header Settings</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
 
         <div class="nav-item">
     <a class="nav-link {{ Request::is('admin/team*') ? '' : 'collapsed' }}" 

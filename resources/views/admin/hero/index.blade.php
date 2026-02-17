@@ -3,7 +3,7 @@
 
 @section('css')
 <style>
-    .custom-width { max-width: 1200px; margin: 0 auto; }
+    
     .preview-box { width: 100%; height: 120px; object-fit: cover; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 5px; background: #eee; }
     .preview-icon { width: 50px; height: 50px; object-fit: contain; border: 1px solid #ddd; padding: 5px; border-radius: 5px; background: #fff; }
     .section-title { color: #00a651; border-left: 4px solid #00a651; padding-left: 10px; font-weight: 700; margin-bottom: 20px; }
@@ -56,14 +56,14 @@
                             <div class="p-3 border rounded shadow-sm">
                                 <h6 class="fw-bold text-center text-primary mb-3">Position {{ ucfirst($m) }}</h6>
                                 
-                                <img src="{{ isset($hero->$imgField) ? asset($hero->$imgField) : asset('public/No_Image_Available.jpg') }}" id="prev-img-{{$m}}" class="preview-box">
+                                <img src="{{ isset($hero->$imgField) ? asset('public/'.$hero->$imgField) : asset('public/No_Image_Available.jpg') }}" id="prev-img-{{$m}}" class="preview-box">
                                 <input type="file" name="{{ $imgField }}" class="form-control form-control-sm mb-2" onchange="preview(this, 'prev-img-{{$m}}')">
                                 
                                 <input type="text" name="{{ $nameField }}" value="{{ $hero->$nameField ?? '' }}" class="form-control form-control-sm mb-2" placeholder="Full Name">
                                 <input type="text" name="{{ $desigField }}" value="{{ $hero->$desigField ?? '' }}" class="form-control form-control-sm mb-2" placeholder="Designation">
                                 
                                 <div class="d-flex align-items-center gap-2">
-                                    <img src="{{ isset($hero->$iconField) ? asset($hero->$iconField) : asset('public/No_Image_Available.jpg') }}" id="prev-icon-{{$m}}" class="preview-icon">
+                                    <img src="{{ isset($hero->$iconField) ? asset('public/'.$hero->$iconField) : asset('public/No_Image_Available.jpg') }}" id="prev-icon-{{$m}}" class="preview-icon">
                                     <div class="flex-grow-1">
                                         <label class="small text-muted d-block">Icon (50x50)</label>
                                         <input type="file" name="{{ $iconField }}" class="form-control form-control-sm" onchange="preview(this, 'prev-icon-{{$m}}')">
@@ -90,7 +90,7 @@
                             <div class="p-3 border rounded bg-light shadow-sm text-center">
                                 <h6 class="fw-bold mb-3 text-uppercase">{{ $key }} Stats</h6>
                                 
-                                <img src="{{ isset($hero->$iconField) ? asset($hero->$iconField) : asset('public/No_Image_Available.jpg') }}" id="prev-stat-{{$key}}" class="preview-icon mb-2 mx-auto d-block">
+                                <img src="{{ isset($hero->$iconField) ? asset('public/'.$hero->$iconField) : asset('public/No_Image_Available.jpg') }}" id="prev-stat-{{$key}}" class="preview-icon mb-2 mx-auto d-block">
                                 <input type="file" name="{{ $iconField }}" class="form-control form-control-sm mb-3" onchange="preview(this, 'prev-stat-{{$key}}')">
                                 
                                 <input type="text" name="{{ $countField }}" value="{{ $hero->$countField ?? '' }}" class="form-control form-control-sm mb-2 text-center" placeholder="Count (e.g. 500+)">

@@ -167,7 +167,8 @@ Route::prefix('admin/portfolio')->middleware(['auth'])->group(function () {
         'update'  => 'portfolio.update',
         'destroy' => 'portfolio.destroy',
     ]);
-
+// Inside Route::prefix('admin/portfolio')->group(function () { ... })
+Route::get('/get-subcategories/{serviceId}', [PortfolioController::class, 'getSubcategories'])->name('portfolio.get_subcategories');
     // ২. Portfolio Header Settings
     Route::get('/header-settings', [PortfolioController::class, 'headerSettings'])->name('portfolio.header.settings');
     Route::post('/header-settings/update', [PortfolioController::class, 'headerUpdate'])->name('portfolio.header.update');
@@ -186,6 +187,7 @@ Route::prefix('admin/service')->middleware(['auth'])->group(function () {
         'update'  => 'service.update',
         'destroy' => 'service.destroy',
     ]);
+// Inside Route::prefix('admin/portfolio')->group(function () { ... })
 
     // ২. Service Header Settings
     Route::get('/header-settings', [ServiceController::class, 'headerSettings'])->name('service.header.settings');
@@ -296,15 +298,11 @@ Route::get('/general-config', [GeneralConfigController::class, 'index'])->name('
     Route::get('ajax-customers', [CustomerController::class, 'data'])->name('ajax.customer.data');
     Route::resource('customer', CustomerController::class);
 
-    Route::resource('service', ServiceController::class);
+    
     Route::resource('offer', OfferController::class);
 
 
-    Route::controller(ServiceController::class)->group(function () {
     
-        Route::get('/service/export','exportServices')->name('service.export');
-    });
-
    
 
     

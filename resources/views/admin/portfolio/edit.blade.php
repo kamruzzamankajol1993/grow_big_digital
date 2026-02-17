@@ -4,7 +4,7 @@
 
 @section('css')
 <style>
-    .custom-width { max-width: 900px; margin: 0 auto; }
+
     .img-preview-box { 
         width: 100%; height: 200px; border: 2px solid var(--primary); 
         border-radius: 15px; display: flex; align-items: center; 
@@ -34,15 +34,22 @@
                         </div>
 
                         <div class="col-md-5">
-                            <label class="form-label fw-bold">Associated Service</label>
-                            <select name="service_id" class="form-select" required>
-                                @foreach($services as $service)
-                                    <option value="{{ $service->id }}" {{ $portfolio->service_id == $service->id ? 'selected' : '' }}>
-                                        {{ $service->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+    <label class="form-label fw-bold">Associated Service</label>
+    <select name="service_id" id="service_id" class="form-select" required>
+        @foreach($services as $service)
+            <option value="{{ $service->id }}" {{ $portfolio->service_id == $service->id ? 'selected' : '' }}>
+                {{ $service->name }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
+<div class="col-md-12">
+    <label class="form-label fw-bold">Subcategory</label>
+    <select name="subcategory_id" id="subcategory_id" class="form-select">
+        <option value="">Select Subcategory</option>
+    </select>
+</div>
 
                         <div class="col-md-12">
                             <label class="form-label fw-bold">Subtitle</label>
@@ -50,9 +57,13 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">Change Thumbnail</label>
+                            <label class="form-label fw-bold">Change Image</label>
                             <div class="img-preview-box mb-2">
-                                <img src="{{ asset($portfolio->image) }}" id="imgPreview">
+                                 @if($portfolio->video_link)
+ <img src="{{asset('public/No_Image_Available.jpg')}}" id="imgPreview">
+                                 @else
+                                <img src="{{ asset('public/'.$portfolio->image) }}" id="imgPreview">
+                                @endif
                             </div>
                             <input type="file" name="image" class="form-control" id="imgInput" accept="image/*">
                             <small class="text-muted">Leave blank to keep current image</small>
@@ -83,6 +94,38 @@
 
 @section('scripts')
 <script>
+    function loadSubcategories(serviceId, selectedSubId = null) {
+        let subCategoryDropdown = $('#subcategory_id');
+        if (serviceId) {
+            $.ajax({
+                url: "{{ url('admin/portfolio/get-subcategories') }}/" + serviceId,
+                type: "GET",
+                success: function(data) {
+                    subCategoryDropdown.empty().append('<option value="">Select Subcategory</option>');
+                    $.each(data, function(key, value) {
+                        let isSelected = (value.id == selectedSubId) ? 'selected' : '';
+                        subCategoryDropdown.append('<option value="' + value.id + '" ' + isSelected + '>' + value.name + '</option>');
+                    });
+                }
+            });
+        }
+    }
+
+    // On Page Load
+    $(document).ready(function() {
+        let initialServiceId = $('#service_id').val();
+        let initialSubId = "{{ $portfolio->subcategory_id }}";
+        if (initialServiceId) {
+            loadSubcategories(initialServiceId, initialSubId);
+        }
+    });
+
+    // On Service Change
+    $('#service_id').on('change', function() {
+        loadSubcategories($(this).val());
+    });
+
+    // Image preview
     document.getElementById('imgInput').onchange = evt => {
         const [file] = document.getElementById('imgInput').files;
         if (file) {

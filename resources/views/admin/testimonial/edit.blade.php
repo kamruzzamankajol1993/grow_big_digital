@@ -33,7 +33,7 @@
                             <label class="form-label fw-bold">Update Image (Recommended: 100x100 px)</label>
                             <div class="d-flex align-items-center gap-3">
                                 <div class="preview-box">
-                                    <img src="{{ asset($testimonial->image) }}" id="imagePreview">
+                                    <img src="{{ asset('public/'.$testimonial->image) }}" id="imagePreview">
                                 </div>
                                 <input type="file" name="image" class="form-control" id="imageInput" accept="image/*">
                             </div>

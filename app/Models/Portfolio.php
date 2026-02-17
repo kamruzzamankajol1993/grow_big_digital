@@ -15,6 +15,7 @@ class Portfolio extends Model
         'video',
         'video_link',
         'title',
+        'subcategory_id',
         'subtitle',
         'description',
         'video_type',
@@ -27,4 +28,9 @@ class Portfolio extends Model
     {
         return $this->belongsTo(GrowBigService::class);
     }
+
+    public function subcategory()
+{
+    return $this->belongsTo(GrowBigService::class, 'subcategory_id');
+}
 }

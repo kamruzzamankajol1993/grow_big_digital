@@ -4,7 +4,7 @@
 
 @section('css')
 <style>
-    .custom-width { max-width: 850px; margin: 0 auto; }
+  
     .icon-preview-box { 
         width: 80px; height: 80px; border: 2px solid #00a651; 
         border-radius: 12px; display: flex; align-items: center; 
@@ -57,7 +57,7 @@
                             <label class="form-label fw-bold">Service Icon</label>
                             <div class="d-flex align-items-center gap-4 p-3 border rounded-3 bg-light">
                                 <div class="icon-preview-box">
-                                    <img src="{{ $service->icon ? asset($service->icon) : asset('admin/no-image.png') }}" id="iconPreview">
+                                    <img src="{{ $service->icon ? asset('public/'.$service->icon) : asset('public/No_Image_Available.jpg') }}" id="iconPreview">
                                 </div>
                                 <div class="flex-grow-1">
                                     <input type="file" name="icon" class="form-control" id="iconInput" accept="image/*">

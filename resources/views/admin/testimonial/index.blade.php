@@ -60,7 +60,7 @@
                             @forelse($testimonials as $item)
                             <tr>
                                 <td class="ps-4">
-                                    <img src="{{ asset($item->image) }}" alt="client" class="testimonial-img">
+                                    <img src="{{ asset('public/'.$item->image) }}" alt="client" class="testimonial-img">
                                 </td>
                                 <td><span class="text-dark fw-bold">{{ $item->name }}</span></td>
                                 <td><span class="badge bg-soft-secondary text-secondary p-2">{{ $item->designation }}</span></td>

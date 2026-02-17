@@ -4,7 +4,7 @@
 
 @section('css')
 <style>
-    .custom-width { max-width: 1200px; margin: 0 auto; }
+  
     .project-thumb { width: 80px; height: 50px; object-fit: cover; border-radius: 8px; border: 1px solid #eee; }
     .table-card { border-radius: 15px; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.05); overflow: hidden; }
     
@@ -60,7 +60,10 @@
                             @forelse($portfolios as $item)
                             <tr>
                                 <td class="ps-4">
-                                    <img src="{{ asset($item->image) }}" class="project-thumb">
+                                    @if($item->video_link)
+                                    @else
+                                    <img src="{{ asset('public/'.$item->image) }}" class="project-thumb">
+                                    @endif
                                 </td>
                                 <td>
                                     <div class="fw-bold text-dark">{{ $item->title }}</div>
@@ -80,6 +83,9 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center gap-2">
+                                        <a href="{{ route('portfolio.show', $item->id) }}" class="btn btn-sm btn-outline-info rounded-circle">
+        <i class="bi bi-eye"></i>
+    </a>
                                         <a href="{{ route('portfolio.edit', $item->id) }}" class="btn btn-sm btn-outline-primary rounded-circle">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>

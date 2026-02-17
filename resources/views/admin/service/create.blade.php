@@ -4,7 +4,7 @@
 
 @section('css')
 <style>
-    .custom-width { max-width: 850px; margin: 0 auto; }
+    
     .icon-preview-box { 
         width: 80px; height: 80px; border: 2px dashed #cbd5e1; 
         border-radius: 12px; display: flex; align-items: center; 

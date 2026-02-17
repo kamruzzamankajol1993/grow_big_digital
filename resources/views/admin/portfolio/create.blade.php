@@ -4,7 +4,7 @@
 
 @section('css')
 <style>
-    .custom-width { max-width: 900px; margin: 0 auto; }
+  
     .img-preview-box { 
         width: 100%; height: 200px; border: 2px dashed #cbd5e1; 
         border-radius: 15px; display: flex; align-items: center; 
@@ -32,28 +32,34 @@
                             <input type="text" name="title" class="form-control" placeholder="Project Name" required>
                         </div>
 
-                        <div class="col-md-5">
-                            <label class="form-label fw-bold">Associated Service</label>
-                            <select name="service_id" class="form-select" required>
-                                <option value="">Select Service</option>
-                                @foreach($services as $service)
-                                    <option value="{{ $service->id }}">{{ $service->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                       <div class="col-md-5">
+    <label class="form-label fw-bold">Associated Service</label>
+    <select name="service_id" id="service_id" class="form-select" required>
+        <option value="">Select Service</option>
+        @foreach($services as $service)
+            <option value="{{ $service->id }}">{{ $service->name }}</option>
+        @endforeach
+    </select>
+</div>
 
+<div class="col-md-12">
+    <label class="form-label fw-bold">Subcategory</label>
+    <select name="subcategory_id" id="subcategory_id" class="form-select">
+        <option value="">Select Subcategory</option>
+    </select>
+</div>
                         <div class="col-md-12">
                             <label class="form-label fw-bold">Subtitle</label>
                             <input type="text" name="subtitle" class="form-control" placeholder="Short tagline for the project">
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">Project Thumbnail (Image)</label>
+                            <label class="form-label fw-bold">Project  (Image)</label>
                             <div class="img-preview-box mb-2" id="previewBox">
                                 <i class="bi bi-image fs-1 text-muted" id="placeholderIcon"></i>
                                 <img src="" id="imgPreview">
                             </div>
-                            <input type="file" name="image" class="form-control" id="imgInput" accept="image/*" required>
+                            <input type="file" name="image" class="form-control" id="imgInput" accept="image/*" >
                             <small class="text-muted">Recommended size: 1000x600 px</small>
                         </div>
 
@@ -81,6 +87,26 @@
 
 @section('scripts')
 <script>
+    $('#service_id').on('change', function() {
+    let serviceId = $(this).val();
+    let subCategoryDropdown = $('#subcategory_id');
+    subCategoryDropdown.empty().append('<option value="">Loading...</option>');
+
+    if (serviceId) {
+        $.ajax({
+            url: "{{ url('admin/portfolio/get-subcategories') }}/" + serviceId,
+            type: "GET",
+            success: function(data) {
+                subCategoryDropdown.empty().append('<option value="">Select Subcategory</option>');
+                $.each(data, function(key, value) {
+                    subCategoryDropdown.append('<option value="' + value.id + '">' + value.name + '</option>');
+                });
+            }
+        });
+    } else {
+        subCategoryDropdown.empty().append('<option value="">Select Subcategory</option>');
+    }
+});
     document.getElementById('imgInput').onchange = evt => {
         const [file] = document.getElementById('imgInput').files;
         if (file) {

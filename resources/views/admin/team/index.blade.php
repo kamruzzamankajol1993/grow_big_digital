@@ -4,7 +4,6 @@
 
 @section('css')
 <style>
-    .custom-width { max-width: 1200px; margin: 0 auto; }
     .member-img { width: 45px; height: 45px; object-fit: cover; border-radius: 50%; border: 2px solid #eee; }
     .table-card { border-radius: 15px; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.05); overflow: hidden; }
     
@@ -62,7 +61,7 @@
                             @forelse($members as $member)
                             <tr>
                                 <td class="ps-4">
-                                    <img src="{{ asset($member->image) }}" class="member-img">
+                                    <img src="{{ asset('public/'.$member->image) }}" class="member-img">
                                 </td>
                                 <td>
                                     <div class="fw-bold text-dark">{{ $member->name }}</div>
@@ -80,9 +79,11 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @foreach($member->socialLinks as $social)
-                                        <i class="bi bi-circle-fill social-icon-sm" title="{{ $social->title }}"></i>
-                                    @endforeach
+                                   @foreach($member->socialLinks as $social)
+    <i class="bi bi-{{ \Illuminate\Support\Str::lower($social->title) }} social-icon-sm" 
+       title="{{ $social->title }}"
+       style="font-size: 1.2rem; margin-right: 5px;"></i>
+@endforeach
                                 </td>
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center gap-2">

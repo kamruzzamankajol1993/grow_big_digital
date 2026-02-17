@@ -4,7 +4,6 @@
 
 @section('css')
 <style>
-    .custom-width { max-width: 1000px; margin: 0 auto; }
     .config-card { border: none; border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); background: #fff; }
     
     /* ট্যাব স্টাইল */

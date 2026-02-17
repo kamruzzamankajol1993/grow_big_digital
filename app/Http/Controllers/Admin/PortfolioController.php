@@ -12,6 +12,14 @@ use Illuminate\Support\Facades\File;
 
 class PortfolioController extends Controller
 {
+
+public function getSubcategories($serviceId)
+{
+    $subcategories = GrowBigService::where('parent_id', $serviceId)
+                                    ->where('status', 1)
+                                    ->get(['id', 'name']);
+    return response()->json($subcategories);
+}
     /**
      * পোর্টফোলিও প্রজেক্ট লিস্ট
      */
@@ -28,7 +36,7 @@ class PortfolioController extends Controller
     public function create()
     {
         // ড্রপডাউনের জন্য একটিভ সার্ভিসগুলো নেওয়া হচ্ছে
-        $services = GrowBigService::where('status', 1)->get();
+        $services = GrowBigService::whereNull('parent_id')->where('status', 1)->get();
         return view('admin.portfolio.create', compact('services'));
     }
 
@@ -40,12 +48,13 @@ class PortfolioController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'service_id' => 'required|exists:grow_big_services,id',
-            'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'subcategory_id' => 'nullable|exists:grow_big_services,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'video_type' => 'nullable|in:link,file',
         ]);
 
         try {
-            $data = $request->only(['service_id', 'title', 'subtitle', 'description', 'video_type']);
+            $data = $request->only(['service_id', 'title', 'subcategory_id','subtitle', 'description', 'video_type']);
             
             // সরাসরি আইফ্রেম (iframe) কোড ইনপুট হিসেবে নেওয়া
             $data['video_link'] = $request->video_link; 
@@ -81,7 +90,7 @@ class PortfolioController extends Controller
     public function edit($id)
     {
         $portfolio = Portfolio::findOrFail($id);
-        $services = GrowBigService::where('status', 1)->get();
+        $services = GrowBigService::whereNull('parent_id')->where('status', 1)->get();
         return view('admin.portfolio.edit', compact('portfolio', 'services'));
     }
 
@@ -97,7 +106,7 @@ class PortfolioController extends Controller
 
         try {
             $portfolio = Portfolio::findOrFail($id);
-            $data = $request->only(['service_id', 'title', 'subtitle', 'description', 'video_type']);
+            $data = $request->only(['service_id', 'title','subcategory_id', 'subtitle', 'description', 'video_type']);
             $data['video_link'] = $request->video_link;
 
             // ইমেজ আপডেট
@@ -171,4 +180,13 @@ class PortfolioController extends Controller
         CommonController::addToLog('Portfolio Header Updated');
         return back()->with('success', 'Header updated successfully!');
     }
+
+
+    public function show($id)
+{
+    // Fetch portfolio with its service and subcategory relations
+    $portfolio = Portfolio::with(['service', 'subcategory'])->findOrFail($id);
+    
+    return view('admin.portfolio.show', compact('portfolio'));
+}
 }

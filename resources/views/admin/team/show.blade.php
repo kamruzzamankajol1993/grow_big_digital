@@ -29,7 +29,7 @@
                 <div class="profile-cover"></div>
                 <div class="card-body text-center p-4">
                     <div class="profile-img-container mb-3">
-                        <img src="{{ asset($member->image) }}" alt="{{ $member->name }}" class="profile-img">
+                        <img src="{{ asset('public/'.$member->image) }}" alt="{{ $member->name }}" class="profile-img">
                     </div>
                     
                     <h3 class="fw-bold text-dark mb-1">{{ $member->name }}</h3>

@@ -4,7 +4,6 @@
 
 @section('css')
 <style>
-    .custom-width { max-width: 900px; margin: 0 auto; }
     .preview-box { 
         width: 150px; height: 150px; border: 2px dashed #ddd; 
         border-radius: 15px; display: flex; align-items: center; 

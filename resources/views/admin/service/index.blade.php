@@ -4,7 +4,7 @@
 
 @section('css')
 <style>
-    .custom-width { max-width: 1200px; margin: 0 auto; }
+
     .service-icon { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; background: #f8fafc; padding: 5px; }
     .table-card { border-radius: 15px; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.05); overflow: hidden; }
     
@@ -61,7 +61,14 @@
                             @forelse($services as $service)
                             <tr>
                                 <td class="ps-4">
-                                    <img src="{{ asset($service->icon ?? 'admin/no-image.png') }}" class="service-icon">
+
+                                    @if(empty($service->icon))
+                                        <div class="service-icon d-flex align-items-center justify-content-center bg-light">
+                                            <i class="bi bi-image fs-3 text-muted"></i>
+                                        </div>
+                                        @else
+                                    <img src="{{ asset('public/'.$service->icon ?? 'public/No_Image_Available.jpg') }}" class="service-icon">
+                                    @endif
                                 </td>
                                 <td>
                                     <div class="fw-bold text-dark">{{ $service->name }}</div>
