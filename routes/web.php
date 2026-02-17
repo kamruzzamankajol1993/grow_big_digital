@@ -33,12 +33,12 @@ Route::get('/clear', function() {
     \Illuminate\Support\Facades\Artisan::call('route:clear');
     return redirect()->back();
 });
-
-
+Route::get('/get-portfolio-by-service', [App\Http\Controllers\Front\FrontController::class, 'getPortfolioByService'])->name('get.portfolio.by.service');
+Route::post('/contact-submit', [FrontController::class, 'contactStore'])->name('contact.store');
 //frontend part start 
 Route::post('/contact-us-post', [App\Http\Controllers\Front\FrontController::class, 'contactUsPost'])->name('front.contactUsPost');
 Route::controller(FrontController::class)->group(function () {
-
+Route::post('/quick-audit-submit', [FrontController::class, 'quickAuditStore'])->name('quickAudit.store');
 Route::get('/user/quote-details/{id}', 'getQuoteDetailsHtml')->name('front.quote.details.html');
     Route::post('/submit-quote', 'submitQuote')->name('front.submitQuote');
 Route::get('/user/order-details/{id}', 'getOrderDetailsHtml')->name('front.order.details.html');

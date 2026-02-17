@@ -1,67 +1,75 @@
-<footer id="footer" class="footer">
 
-    <div class="container footer-top">
-        <div class="row gy-4">
-            <div class="col-lg-4 col-md-6 footer-about">
-                <a href="{{ route('front.index') }}" class="logo d-flex align-items-center">
-                    <img src="{{ asset('/') }}{{ $front_logo_name }}" alt="">
-                </a>
-                <div class="social-links d-flex mt-2">
-                    {{-- Twitter/X --}}
-                    @php $twitter = $social_links->where('title', 'Twitter')->first(); @endphp
-                    @if($twitter)
-                        <a href="{{ $twitter->link }}" target="_blank"><i class="bi bi-twitter-x"></i></a>
-                    @endif
+    <footer class="footer-advanced pt-5 pb-3">
+    <div class="container">
+        <div class="row g-4 mb-5">
+           <div class="col-lg-5 col-md-6 reveal-up">
+    <a class="navbar-brand mb-4 d-block" href="#">
+        <img src="{{ asset($siteConfig->logo) }}" alt="GrowBig Digital" style="height: 60px; filter: brightness(0) invert(1);">
+    </a>
+    <p class="footer-text opacity-75">
+       {{ $siteConfig->footer_short_description ?? 'Default short description text...' }}
+    </p>
 
-                    {{-- Facebook --}}
-                    @php $facebook = $social_links->where('title', 'Facebook')->first(); @endphp
-                    @if($facebook)
-                        <a href="{{ $facebook->link }}" target="_blank"><i class="bi bi-facebook"></i></a>
-                    @endif
-
-                    {{-- Instagram --}}
-                    @php $instagram = $social_links->where('title', 'Instagram')->first(); @endphp
-                    @if($instagram)
-                         <a href="{{ $instagram->link }}" target="_blank"><i class="bi bi-instagram"></i></a>
-                    @endif
-
-                    {{-- LinkedIn --}}
-                    @php $linkedin = $social_links->where('title', 'LinkedIn')->first(); @endphp
-                    @if($linkedin)
-                        <a href="{{ $linkedin->link }}" target="_blank"><i class="bi bi-linkedin"></i></a>
-                    @endif
+    @php
+        $iconMap = [
+            'Facebook'  => 'bi-facebook',
+            'Twitter'   => 'bi-twitter-x',
+            'LinkedIn'  => 'bi-linkedin',
+            'Instagram' => 'bi-instagram',
+            'YouTube'   => 'bi-youtube',
+            'Pinterest' => 'bi-pinterest'
+        ];
+    @endphp
+                <div class="footer-socials mt-4">
+                   @foreach($socialLinks as $social)
+        @php 
+            // ম্যাপে না থাকলে ডিফল্ট লিংক আইকন দেখাবে
+            $iconClass = $iconMap[$social->title] ?? 'bi-link-45deg'; 
+        @endphp
+        <a href="{{ $social->link }}" target="_blank" title="{{ $social->title }}">
+            <i class="bi {{ $iconClass }}"></i>
+        </a>
+    @endforeach
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-3 footer-links">
-                <h4>Useful Links</h4>
-                <ul>
-                    <li><a href="{{ route('front.index') }}">Home</a></li>
-                    <li><a href="{{ route('front.aboutUs') }}">About us</a></li>
-                    <li><a href="{{ route('front.contactUs') }}">Contact us</a></li>
-                    <li><a href="#">Terms of service</a></li>
-                    <li><a href="#">Privacy policy</a></li>
+            <div class="col-lg-3 col-md-6 ps-lg-5 reveal-up" style="transition-delay: 0.1s;">
+                <h5 class="fw-bold mb-4">Quick Links</h5>
+                <ul class="list-unstyled footer-links">
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#portfolio">Our Work</a></li>
+                    <li><a href="#reviews">Testimonials</a></li>
+                    <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
 
-            <div class="col-lg-4 col-md-3 footer-links">
-                <h4>Contact Details</h4>
-                <div class="footer-contact">
-                    <p>{{ $front_ins_add }}</p>
-                    <p class="mt-3"><strong>Phone:</strong> <span>{{ $front_ins_phone }}</span></p>
-                    <p><strong>Email:</strong> <span>{{ $front_ins_email }}</span></p>
-                </div>
+            <div class="col-lg-4 col-md-6 reveal-up" style="transition-delay: 0.2s;">
+                <h5 class="fw-bold mb-4">Expertise</h5>
+                <ul class="list-unstyled footer-links">
+                    @foreach($parentServices as $pService)
+                    <li><a href="#services">{{ $pService->name }}</a></li>
+                    @endforeach
+                </ul>
             </div>
-
         </div>
-    </div>
 
-    <div class="container-fluid copyright text-center mt-4">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">{{ $front_ins_name }}</strong> <span>All Rights Reserved</span>
-        </p>
-        <div class="credits">
-              Designed by <a href="#"><img style="height: 25px;" src="{{ asset('/') }}public/front/assets/img/footer.png" alt=""></a>
-          </div>
-    </div>
+       <hr class="footer-hr">
 
+<div class="row align-items-center mt-4 pb-5"> <div class="col-md-6 text-center text-md-start">
+        <p class="mb-0 small opacity-75 text-white">&copy; {{ date('Y') }} {{ $siteConfig->site_name }}. All Rights Reserved.</p>
+    </div>
+    
+    <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
+        <ul class="list-inline mb-0 footer-bottom-links">
+            <li class="list-inline-item me-3">
+                <a href="#" class="small text-white opacity-75 text-decoration-none">Privacy Policy</a>
+            </li>
+            <li class="list-inline-item">
+                <a href="#" class="small text-white opacity-75 text-decoration-none">Terms of Service</a>
+            </li>
+        </ul>
+    </div>
+</div>
+    </div>
 </footer>
+

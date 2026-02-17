@@ -1,647 +1,651 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="author" content="{{ $front_ins_name }} -  {{ $front_ins_title }}">
-    <meta name="robots" content="">
-    <meta name="keywords" content="{{ $front_ins_k }}">
-    <meta name="description" content="{{ $front_ins_d }}">
-    <meta property="og:title" content="{{ $front_ins_name }} -  {{ $front_ins_title }}">
-    <meta property="og:description" content="{{ $front_ins_d }}">
-    <meta property="og:image" content="{{ asset('/') }}{{ $front_logo_name }}">
-    <title>@yield('title')</title>
-    <link rel="shortcut icon" href="{{ asset('/') }}{{ $front_icon_name }}">
+    
+    <title>@yield('title') | {{ $siteConfig->site_name ?? 'Admin Portal' }}</title>
+    <meta name="description" content="{{ $siteConfig->meta_description ?? '' }}">
+    <meta name="keywords" content="{{ $siteConfig->meta_keywords ?? '' }}">
+    <meta name="author" content="{{ $siteConfig->site_name ?? 'Admin' }}">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap"
-        rel="stylesheet">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="@yield('title') | {{ $siteConfig->site_name }}">
+    <meta property="og:description" content="{{ $siteConfig->meta_description ?? '' }}">
+    <meta property="og:image" content="{{ asset($siteConfig->og_image ?? $siteConfig->logo) }}">
 
-    <link href="{{ asset('/') }}public/front/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ asset('/') }}public/front/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="{{ asset('/') }}public/front/assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="{{ asset('/') }}public/front/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="{{ asset('/') }}public/front/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('title') | {{ $siteConfig->site_name }}">
+    <meta name="twitter:description" content="{{ $siteConfig->meta_description ?? '' }}">
+    <meta name="twitter:image" content="{{ asset($siteConfig->og_image ?? $siteConfig->logo) }}">
 
-    <link href="{{ asset('/') }}public/front/assets/css/main.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{{ asset($siteConfig->icon) }}">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"> <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> 
 
-    @yield('css')
 
+    <link rel="stylesheet" href="{{ asset('/') }}public/front/css/style.css">
+    
     <style>
-        /* =========================================
-   1. AUTH (LOGIN / REGISTER) TABS DESIGN
-   ========================================= */
-/* ট্যাব কন্টেইনার ফ্লেক্স করা যাতে পাশাপাশি থাকে */
-.cellexa_company_category_auth_toggle {
-    display: flex;
-    justify-content: center;
-    border-bottom: 1px solid #dee2e6;
-    margin-bottom: 20px;
-    background: #f8f9fa;
-    border-radius: 5px 5px 0 0;
-    overflow: hidden;
-}
+        /* ১. টগল বাটন পুরোপুরি সাদা */
+        .navbar-toggler {
+            border: 2px solid #ffffff !important;
+            padding: 5px 8px;
+        }
+        .navbar-toggler-icon {
+            filter: invert(1) brightness(200%) !important;
+        }
 
-/* প্রতিটি ট্যাবের ডিজাইন */
-.cellexa_company_category_auth_tab {
-    flex: 1;
-    text-align: center;
-    padding: 12px 15px;
-    cursor: pointer;
-    font-weight: 600;
-    color: #6c757d;
-    transition: all 0.3s ease;
-    border-bottom: 3px solid transparent;
-}
+        /* ২. হেডার বাটনগুলোর হাইট ও উইডথ একদম সমান করা */
+        .header-btn {
+            height: 46px !important;
+            min-width: 170px !important;
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700 !important;
+            font-size: 14px !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
 
-/* মাউস হোভার ইফেক্ট */
-.cellexa_company_category_auth_tab:hover {
-    background: #e9ecef;
-    color: #495057;
-}
+        /* ৩. নেভিগেশন লিংক বোল্ড এবং হোভার ইফেক্ট (বড় হওয়া) */
+        .navbar-nav .nav-link {
+            font-weight: 700 !important;
+            color: black;
+            transition: transform 0.3s ease, color 0.3s ease !important;
+            display: inline-block;
+        }
+        .navbar-nav .nav-link:hover {
+            transform: scale(1.15);
+            color: var(--accent-color) !important;
+        }
 
-/* যখন ট্যাব একটিভ থাকবে */
-.cellexa_company_category_auth_tab.active {
-    color: #0d6efd; /* প্রাইমারি কালার */
-    background: #fff;
-    border-bottom: 3px solid #0d6efd;
-}
+        /* ৪. অফক্যানভাস স্টাইল ও কালার */
+        .offcanvas {
+            background-color: #080e32 !important; /* আপনার থিম কালার */
+            color: white;
+            border-right: 1px solid var(--accent-color);
+        }
+        .offcanvas-header { border-bottom: 1px solid rgba(255,255,255,0.1); }
+        
+        /* অফক্যানভাসে বাটন গুলোর মার্জিন */
+        .offcanvas .btn {
+            padding: 12px;
+            font-weight: 600;
+        }
+    </style>
 
-/* ডিফল্টভাবে সব ফর্ম হাইড থাকবে */
-.cellexa_company_category_auth_form {
-    display: none;
-    padding: 0 10px;
-    animation: fadeIn 0.4s ease-in-out;
-}
+     @yield('css')
 
-/* জাভাস্ক্রিপ্ট যখন 'show' ক্লাস যুক্ত করবে তখন ফর্ম দেখাবে */
-.cellexa_company_category_auth_form.show {
-    display: block;
-}
-
-/* এনিমেশন ইফেক্ট */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* =========================================
-   2. SHOPPING CART OFF-CANVAS DESIGN
-   ========================================= */
-/* কার্ট বডিকে ফ্লেক্স করা যাতে ফুটার নিচে থাকে */
-.cellexa_company_category_offcanvas_body_flex {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    padding: 0 !important; /* ডিফল্ট প্যাডিং রিসেট */
-}
-
-/* আইটেম লিস্ট এরিয়া (স্ক্রল হবে) */
-.cellexa_company_category_cart_list_container {
-    flex: 1;
-    overflow-y: auto;
-    padding: 15px;
-}
-
-/* প্রতিটি কার্ট আইটেম এর ডিজাইন */
-.cellexa_company_category_cart_item {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 15px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #f1f1f1;
-    position: relative;
-}
-
-/* লাস্ট আইটেম এর বর্ডার রিমুভ */
-.cellexa_company_category_cart_item:last-child {
-    border-bottom: none;
-}
-
-/* প্রোডাক্ট ইমেজ সাইজ ফিক্স */
-.cellexa_company_category_cart_img {
-    width: 70px;
-    height: 70px;
-    object-fit: cover;
-    border-radius: 8px;
-    border: 1px solid #eee;
-    flex-shrink: 0;
-}
-
-/* প্রোডাক্ট ডিটেইলস এরিয়া */
-.cellexa_company_category_cart_details {
-    flex: 1;
-    min-width: 0; /* টেক্সট ওভারফ্লো ফিক্স */
-}
-
-.cellexa_company_category_cart_details h6 {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 4px;
-    color: #333;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* প্লাস মাইনাস বাটন ডিজাইন */
-.cellexa_company_category_qty_controls .input-group {
-    width: 100px !important;
-}
-
-.cellexa_company_category_qty_controls button {
-    padding: 2px 8px;
-    font-size: 12px;
-}
-
-.cellexa_company_category_qty_controls input {
-    height: 28px;
-    font-size: 13px;
-    background: #fff;
-}
-
-/* ডিলিট বাটন ডিজাইন */
-.cellexa_company_category_delete_btn {
-    background: none;
-    border: none;
-    color: #dc3545;
-    font-size: 18px;
-    cursor: pointer;
-    padding: 5px;
-    transition: transform 0.2s;
-}
-
-.cellexa_company_category_delete_btn:hover {
-    transform: scale(1.1);
-}
-
-/* কার্ট ফুটার (Request Button) ফিক্সড পজিশন */
-.cellexa_company_category_cart_footer {
-    padding: 15px;
-    background: #fff;
-    border-top: 1px solid #e9ecef;
-    box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
-}
-
-.cellexa_company_category_cart_footer button {
-    padding: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-        </style>
-
+     @if($siteConfig->google_analytics_code)
+        {!! $siteConfig->google_analytics_code !!}
+    @endif
 </head>
+<body>
+<canvas id="particleCanvas"></canvas>
 
-<body class="index-page">
-    @include('front.include.header')
-    @include('front.include.offcanvas')
+<!-- Navbar -->
+    
+@include('front.include.header')
+    <!-- end of navbar -->
+
+    <!-- Offcanvas Sidebar -->
+
+   @include('front.include.offcanvas')
+
+    <!-- end of offcanvas -->
+
 
     @yield('body')
+
+
+<!-- footer -->
+    
     @include('front.include.footer')
 
-    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="{{ asset('/') }}public/front/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('/') }}public/front/assets/vendor/php-email-form/validate.js"></script>
-    <script src="{{ asset('/') }}public/front/assets/vendor/aos/aos.js"></script>
-    <script src="{{ asset('/') }}public/front/assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="{{ asset('/') }}public/front/assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="{{ asset('/') }}public/front/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <!-- end of footer -->
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Floating Quick Audit Button -->
 
-    <script src="{{ asset('/') }}public/front/assets/js/main.js"></script>
+@include('front.include.quick')
 
-    <script>
-        // Setup CSRF Token for all AJAX requests
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
 
-        // ==========================================
-        // 1. CART FUNCTIONS
-        // ==========================================
-        function loadCart() {
-            $.ajax({
-                url: "{{ route('front.getCartContent') }}",
-                method: "GET",
-                success: function(response) {
-                    $('#cart_dynamic_body').html(response);
-                },
-                error: function(xhr) {
-                    console.error("Failed to load cart");
-                }
-            });
-        }
 
-        function addToCart(productId, quantity) {
-            $.ajax({
-                url: "{{ route('front.addToCart') }}",
-                method: "POST",
-                data: {
-                    product_id: productId,
-                    quantity: quantity
-                },
-                success: function(response) {
-                    if (response.status === 'success') {
-                        loadCart();
-                        var cartOffcanvas = new bootstrap.Offcanvas(document.getElementById('cellexaCartCanvas'));
-                        cartOffcanvas.show();
 
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 2000,
-                            timerProgressBar: true
-                        });
-                        Toast.fire({
-                            icon: 'success',
-                            title: response.message
-                        });
-                    }
-                },
-                error: function(xhr) {
+<a href="https://wa.me/{{ $siteConfig->whatsapp_number }}" class="whatsapp-float" target="_blank">
+    <i class="bi bi-whatsapp"></i>
+</a>
+<div id="progress-wrap">
+    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+    </svg>
+    <i class="bi bi-arrow-up"></i>
+</div>
+  
+
+<!-- JavaScript Libraries -->
+
+ <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+$(document).ready(function() {
+    $('#quickAuditForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        let formData = $(this).serialize();
+        let btn = $('#submitBtn');
+        
+        btn.prop('disabled', true).html('Sending...');
+
+        $.ajax({
+            url: "{{ route('quickAudit.store') }}",
+            type: "POST",
+            data: formData,
+            success: function(response) {
+                btn.prop('disabled', false).html('SEND REQUEST');
+                
+                if (response.status === 'success') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: response.message,
+                        confirmButtonColor: '#00a651'
+                    });
+                    $('#quickAuditForm')[0].reset();
+                    $('#quickAuditModal').modal('hide'); // মডাল বন্ধ হবে
+                } else {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Oops...',
-                        text: 'Something went wrong!',
+                        title: 'Validation Error',
+                        text: 'Please check your inputs.'
                     });
                 }
-            });
-        }
-
-        // ==========================================
-        // 2. AUTH & TAB SWITCHING LOGIC (Updated)
-        // ==========================================
-        function switchCellexaAuth(type) {
-            const loginForm = document.getElementById('cellexaLoginForm');
-            const registerForm = document.getElementById('cellexaRegisterForm');
-            const forgotForm = document.getElementById('cellexaForgotForm');
-            const authTabs = document.getElementById('auth_tabs_container');
-
-            // Hide all forms first
-            if (loginForm) loginForm.classList.remove('show');
-            if (registerForm) registerForm.classList.remove('show');
-            if (forgotForm) forgotForm.classList.remove('show');
-
-            // Reset Forgot Password Steps
-            $('#forgot_step_1').show();
-            $('#forgot_step_2').hide();
-            if ($('#forgot_check_email_form').length > 0) $('#forgot_check_email_form')[0].reset();
-            if ($('#forgot_reset_password_form').length > 0) $('#forgot_reset_password_form')[0].reset();
-
-            // Handle switching
-            if (type === 'login') {
-                if (loginForm) loginForm.classList.add('show');
-                if (authTabs) authTabs.style.display = 'flex';
-                $('.cellexa_company_category_auth_tab').eq(0).addClass('active');
-                $('.cellexa_company_category_auth_tab').eq(1).removeClass('active');
-            } else if (type === 'register') {
-                if (registerForm) registerForm.classList.add('show');
-                if (authTabs) authTabs.style.display = 'flex';
-                $('.cellexa_company_category_auth_tab').eq(0).removeClass('active');
-                $('.cellexa_company_category_auth_tab').eq(1).addClass('active');
-            } else if (type === 'forgot') {
-                if (forgotForm) forgotForm.classList.add('show');
-                if (authTabs) authTabs.style.display = 'none'; // Hide tabs for cleaner UI
-            }
-        }
-
-        // ==========================================
-        // 3. QUOTE LOGIC
-        // ==========================================
-        var pendingQuoteRequest = false;
-
-        function initiateQuoteRequest() {
-            var isLoggedIn = "{{ Auth::check() ? 'true' : 'false' }}";
-
-            if (isLoggedIn === 'true') {
-                submitQuoteToAdmin();
-            } else {
-                pendingQuoteRequest = true;
-                var cartCanvas = bootstrap.Offcanvas.getInstance(document.getElementById('cellexaCartCanvas'));
-                if (cartCanvas) cartCanvas.hide();
-
-                var profileCanvas = new bootstrap.Offcanvas(document.getElementById('cellexaProfileCanvas'));
-                profileCanvas.show();
-
-                switchCellexaAuth('login');
-
+            },
+            error: function() {
+                btn.prop('disabled', false).html('SEND REQUEST');
                 Swal.fire({
-                    toast: true,
-                    position: 'top-end',
-                    icon: 'info',
-                    title: 'Please Login or Register to submit quote.',
-                    showConfirmButton: false,
-                    timer: 3000
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong. Please try again.'
                 });
             }
-        }
+        });
+    });
+});
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-        function submitQuoteToAdmin() {
-            Swal.fire({
-                title: 'Sending Request...',
-                allowOutsideClick: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                }
-            });
-
-            $.ajax({
-                url: "{{ route('front.submitQuote') }}",
-                type: "POST",
-                data: {
-                    _token: "{{ csrf_token() }}"
-                },
-                success: function(response) {
-                    if (response.status === 'success') {
-                        loadCart();
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Request Sent!',
-                            text: response.message,
-                            confirmButtonColor: '#0d6efd'
-                        }).then(() => {
-                            window.location.href = "{{ route('front.userDashboard') }}?tab=quotes";
-                        });
-                        pendingQuoteRequest = false;
-                        var cartCanvas = bootstrap.Offcanvas.getInstance(document.getElementById(
-                            'cellexaCartCanvas'));
-                        if (cartCanvas) cartCanvas.hide();
-                    } else {
-                        Swal.fire('Error', response.message, 'error');
-                    }
-                },
-                error: function() {
-                    Swal.fire('Error', 'Failed to submit request.', 'error');
-                }
-            });
-        }
-
-        // ==========================================
-        // 4. DOCUMENT READY HANDLERS
-        // ==========================================
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> <script>
         $(document).ready(function() {
-            // Load cart
-            loadCart();
-
-            // Cart Quantity Update
-            $(document).on('click', '.cart-qty-plus, .cart-qty-minus', function() {
-                var id = $(this).data('id');
-                var inputField = $(this).siblings('.cart-qty-input');
-                var currentVal = parseInt(inputField.val());
-                var isPlus = $(this).hasClass('cart-qty-plus');
-                var newVal = isPlus ? currentVal + 1 : currentVal - 1;
-
-                if (newVal < 1) return;
-
-                $.ajax({
-                    url: "{{ route('front.updateCartQty') }}",
-                    method: "POST",
-                    data: {
-                        id: id,
-                        quantity: newVal
-                    },
-                    success: function(response) {
-                        if (response.status === 'success') {
-                            loadCart();
-                        }
-                    }
-                });
+            // CSRF Token Setup for Ajax
+            $.ajaxSetup({
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
             });
 
-            // Cart Remove Item
-            $(document).on('click', '.remove-from-cart', function() {
-                var id = $(this).data('id');
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "Do you want to remove this item from the list?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#0d6efd',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, remove it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: "{{ route('front.removeFromCart') }}",
-                            method: "POST",
-                            data: {
-                                id: id
-                            },
-                            success: function(response) {
-                                if (response.status === 'success') {
-                                    loadCart();
-                                    Swal.fire('Removed!',
-                                        'Item has been removed from your list.',
-                                        'success');
-                                }
-                            }
-                        });
-                    }
-                });
+            // Initialize Modern Datepicker (Flatpickr)
+            $(".datepicker").flatpickr({
+                dateFormat: "Y-m-d",
+                allowInput: true
             });
 
-            // Login Submit
-            $('#login_form_submit').submit(function(e) {
-                e.preventDefault();
-                var formData = $(this).serialize();
+            // Initialize Select2
+            $('.select2').select2({ width: '100%' });
 
-                $.ajax({
-                    url: "{{ route('front.loginUserPost') }}",
-                    type: "POST",
-                    data: formData,
-                    success: function(response) {
-                        if (response.status === 'success') {
-                            if (pendingQuoteRequest === true) {
-                                submitQuoteToAdmin();
-                            } else {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Login Successful',
-                                    timer: 1500,
-                                    showConfirmButton: false
-                                }).then(() => {
-                                    window.location.href = response.redirect_url;
-                                });
-                            }
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Login Failed',
-                                text: response.message
-                            });
-                        }
-                    }
-                });
+            // Initialize Summernote
+            $('.summernote').summernote({
+                height: 250,
+                placeholder: 'Start typing here...',
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['link', 'picture']],
+                    ['view', ['fullscreen', 'codeview']]
+                ]
             });
 
-            // Register Submit
-            $('#register_form_submit').submit(function(e) {
-                e.preventDefault();
-                var formData = $(this).serialize();
-
-                $.ajax({
-                    url: "{{ route('front.registerUserPost') }}",
-                    type: "POST",
-                    data: formData,
-                    success: function(response) {
-                        if (response.status === 'success') {
-                            if (pendingQuoteRequest === true) {
-                                submitQuoteToAdmin();
-                            } else {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Registered!',
-                                    timer: 1500,
-                                    showConfirmButton: false
-                                }).then(() => {
-                                    window.location.href = response.redirect_url;
-                                });
-                            }
-                        } else {
-                            // Handle errors better if needed
-                            let msg = response.message;
-                            if (response.errors) msg = Object.values(response.errors)[0][0];
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: msg
-                            });
-                        }
-                    }
-                });
-            });
-
-            // --- FORGOT PASSWORD STEP 1: CHECK EMAIL ---
-            $('#forgot_check_email_form').submit(function(e) {
-                e.preventDefault();
-                var formData = $(this).serialize();
-                var emailVal = $(this).find('input[name="email"]').val();
-
-                Swal.fire({
-                    title: 'Checking...',
-                    didOpen: () => {
-                        Swal.showLoading()
-                    }
-                });
-
-                $.ajax({
-                    url: "{{ route('front.checkEmailForReset') }}",
-                    type: "POST",
-                    data: formData,
-                    success: function(response) {
-                        Swal.close();
-                        if (response.status === 'success') {
-                            // Show Step 2
-                            $('#forgot_step_1').fadeOut(300, function() {
-                                $('#forgot_step_2').fadeIn(300);
-                            });
-
-                            // Store email
-                            $('#verified_email').val(emailVal);
-
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 3000
-                            });
-                            Toast.fire({
-                                icon: 'success',
-                                title: 'Account found! Please reset password.'
-                            });
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Not Found',
-                                text: response.message
-                            });
-                        }
-                    },
-                    error: function() {
-                        Swal.close();
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'Something went wrong.'
-                        });
-                    }
-                });
-            });
-
-            // --- FORGOT PASSWORD STEP 2: RESET PASSWORD ---
-            $('#forgot_reset_password_form').submit(function(e) {
-                e.preventDefault();
-                var formData = $(this).serialize();
-
-                Swal.fire({
-                    title: 'Updating...',
-                    didOpen: () => {
-                        Swal.showLoading()
-                    }
-                });
-
-                $.ajax({
-                    url: "{{ route('front.directPasswordReset') }}",
-                    type: "POST",
-                    data: formData,
-                    success: function(response) {
-                        Swal.close();
-                        if (response.status === 'success') {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Success!',
-                                text: 'Password updated successfully. Please Login.',
-                                confirmButtonText: 'Go to Login'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    switchCellexaAuth('login');
-                                }
-                            });
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: response.message
-                            });
-                        }
-                    },
-                    error: function(xhr) {
-                        Swal.close();
-                        let msg = 'Update failed.';
-                        if (xhr.responseJSON && xhr.responseJSON.errors) {
-                            msg = Object.values(xhr.responseJSON.errors)[0][0];
-                        }
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Validation Error',
-                            text: msg
-                        });
-                    }
-                });
-            });
-
+            // Global SweetAlert for Success/Error
+            @if(session('success'))
+                Swal.fire({ icon: 'success', title: 'Success!', text: "{{ session('success') }}", timer: 3000 });
+            @endif
+            @if(session('error'))
+                Swal.fire({ icon: 'error', title: 'Oops...', text: "{{ session('error') }}" });
+            @endif
         });
     </script>
-    @yield('scripts')
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
+<script>
+
+   document.addEventListener('DOMContentLoaded', function() {
+    const swiperOptions = {
+        loop: true,
+        effect: "flip",
+        grabCursor: true,
+        speed: 1500,
+        flipEffect: { slideShadows: true, limitRotation: true },
+        autoplay: { delay: 5000, disableOnInteraction: false }
+    };
+
+    new Swiper(".heroPortraitSlider", swiperOptions);
+    new Swiper(".heroLandscapeSlider", { ...swiperOptions, autoplay: { delay: 6500 } });
+});
+    /**
+     * 1. HERO SLIDER INITIALIZATION
+     * Uses the Flip effect with controlled speed for a cinematic feel.
+     */
+    var swiper = new Swiper(".myHeroSlider", {
+        loop: true,
+        effect: "flip",
+        grabCursor: true,
+        speed: 1500, 
+        flipEffect: {
+            slideShadows: true,
+            limitRotation: true,
+        },
+        autoplay: { 
+            delay: 5000, 
+            disableOnInteraction: false 
+        },
+        pagination: { 
+            el: ".swiper-pagination", 
+            clickable: true 
+        },
+    });
+
+    /**
+     * 2. UNIFIED SCROLL REVEAL LOGIC
+     * Fixes "Uncaught TypeError" by checking if elements exist before processing.
+     */
+    function revealAll() {
+        // Targets all animation classes used in the project
+        const elements = document.querySelectorAll('.reveal-left, .reveal-right, .reveal-fade, .reveal-up, .reveal-on-scroll');
+        
+        elements.forEach(el => {
+            let windowHeight = window.innerHeight;
+            let elementTop = el.getBoundingClientRect().top;
+            let elementVisible = 100;
+
+            if (elementTop < windowHeight - elementVisible) {
+                el.classList.add('reveal-visible');
+                
+                // Backup logic for the old reveal-on-scroll class
+                if (el.classList.contains('reveal-on-scroll')) {
+                    el.style.opacity = "1";
+                    el.style.transform = "translateY(0)";
+                }
+            }
+        });
+    }
+
+    /**
+     * 3. PORTFOLIO FILTERING LOGIC
+     * Smoothly handles category transitions.
+     */
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const activeBtn = document.querySelector('.filter-btn.active');
+            if (activeBtn) activeBtn.classList.remove('active');
+            
+            this.classList.add('active');
+            const filterValue = this.getAttribute('data-filter');
+            const items = document.querySelectorAll('.portfolio-item');
+
+            items.forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'scale(0.9)';
+                
+                setTimeout(() => {
+                    if (filterValue === 'all' || item.classList.contains(filterValue)) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, 50);
+                    } else {
+                        item.style.display = 'none';
+                    }
+                }, 300);
+            });
+        });
+    });
+
+    /**
+     * 4. REVIEW SLIDER (TESTIMONIALS)
+     * Auto-sliding with responsive breakpoints.
+     */
+    var reviewSwiper = new Swiper(".reviewSlider", {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        },
+        speed: 1000,
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+        breakpoints: {
+            768: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 }
+        }
+    });
+
+    /**
+     * 5. BACK TO TOP PROGRESS RING
+     * Calculates scroll percentage and updates SVG path.
+     */
+    document.addEventListener('DOMContentLoaded', function() {
+        var progressPath = document.querySelector('#progress-wrap path');
+        
+        if (progressPath) {
+            var pathLength = progressPath.getTotalLength();
+            progressPath.style.transition = progressPath.style.WebkitTransition = 'none';
+            progressPath.style.strokeDasharray = pathLength + ' ' + pathLength;
+            progressPath.style.strokeDashoffset = pathLength;
+            progressPath.getBoundingClientRect();
+            progressPath.style.transition = progressPath.style.WebkitTransition = 'stroke-dashoffset 10ms linear';
+            
+            var updateProgress = function () {
+                var scroll = window.scrollY;
+                var height = document.documentElement.scrollHeight - window.innerHeight;
+                var progress = pathLength - (scroll * pathLength / height);
+                progressPath.style.strokeDashoffset = progress;
+
+                // Show/Hide button logic
+                if (scroll > 150) {
+                    document.querySelector('#progress-wrap').classList.add('active-progress');
+                } else {
+                    document.querySelector('#progress-wrap').classList.remove('active-progress');
+                }
+            };
+            
+            updateProgress();
+            window.addEventListener('scroll', updateProgress);
+            
+            document.querySelector('#progress-wrap').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            });
+        }
+    });
+
+    /**
+     * 6. OFFCANVAS & GLOBAL LISTENERS
+     */
+    // Initial call for animations on page load
+    window.addEventListener('load', revealAll);
+    window.addEventListener('scroll', revealAll);
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.offcanvas-body .nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            const sidebar = document.getElementById('sidebarMenu');
+            const bsOffcanvas = bootstrap.Offcanvas.getInstance(sidebar);
+            if(bsOffcanvas) bsOffcanvas.hide();
+        });
+    });
+    const canvas = document.getElementById('particleCanvas');
+const ctx = canvas.getContext('2d');
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particlesArray;
+
+// লোগোর মূল কালার কোডসমূহ
+const colors = ['#00a651', '#080e32', '#00a651']; 
+
+class Particle {
+    constructor(x, y, directionX, directionY, size, color) {
+        this.x = x;
+        this.y = y;
+        this.directionX = directionX;
+        this.directionY = directionY;
+        this.size = size;
+        this.color = color;
+    }
+    
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }
+
+    update() {
+        // স্ক্রিনের সীমানা চেক করা
+        if (this.x > canvas.width || this.x < 0) {
+            this.directionX = -this.directionX;
+        }
+        if (this.y > canvas.height || this.y < 0) {
+            this.directionY = -this.directionY;
+        }
+
+        this.x += this.directionX;
+        this.y += this.directionY;
+        this.draw();
+    }
+}
+
+// কানেক্টিং লাইন বা জাল (Mesh) তৈরির ফাংশন
+function connect() {
+    let opacityValue = 1;
+    for (let a = 0; a < particlesArray.length; a++) {
+        for (let b = a; b < particlesArray.length; b++) {
+            // দুটি পার্টিকেলের মধ্যে দূরত্ব হিসাব করা
+            let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
+                + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+            
+            // যদি দূরত্ব একটি নির্দিষ্ট সীমার মধ্যে থাকে, তবে লাইন আঁকা হবে
+            if (distance < (canvas.width / 7) * (canvas.height / 7)) {
+                opacityValue = 1 - (distance / 20000);
+                ctx.strokeStyle = `rgba(0, 166, 81, ${opacityValue})`; // লোগোর সবুজ রঙে লাইন
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                ctx.stroke();
+            }
+        }
+    }
+}
+
+function init() {
+    particlesArray = [];
+    // স্ক্রিন সাইজ অনুযায়ী পার্টিকেল সংখ্যা নির্ধারণ
+    let numberOfParticles = (canvas.height * canvas.width) / 15000; 
+    for (let i = 0; i < numberOfParticles; i++) {
+        let size = (Math.random() * 3) + 1;
+        let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+        let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+        let directionX = (Math.random() * 1) - 0.5;
+        let directionY = (Math.random() * 1) - 0.5;
+        let color = colors[Math.floor(Math.random() * colors.length)];
+
+        particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+    }
+}
+
+function animate() {
+    requestAnimationFrame(animate);
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+    for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+    }
+    connect(); // লাইনগুলো ড্র করা হচ্ছে
+}
+
+window.addEventListener('resize', function() {
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+    init();
+});
+
+init();
+animate();
+
+/**
+ * ১. পোর্টফোলিও ডাটাবেজ
+ * আপনার স্ক্রিনশটের লেআউট অনুযায়ী টাইটেল, ডেসক্রিপশন এবং ট্যাগ সেট করা হয়েছে।
+ */
+const workData = {
+    'cinematic': [
+        {type: 'video', id: 'ScMzIvxBSi4', title: 'Cinematic Brand Documentary', subtitle: 'Advanced color grading and rhythmic sound design.', tag: 'VIDEO PRODUCTION'},
+        {type: 'video', id: 'ScMzIvxBSi4', title: 'Luxury Real Estate', subtitle: 'Modern transition and smooth drone movements.', tag: 'POST PRODUCTION'},
+        {type: 'video', id: 'ScMzIvxBSi4', title: 'Fashion Showroom', subtitle: 'Fast-paced editing for premium brands.', tag: 'VIDEO EDITING'},
+        {type: 'video', id: 'ScMzIvxBSi4', title: 'Music Video Edit', subtitle: 'Visual effects and beat-synced visuals.', tag: 'VFX WORK'}
+    ],
+    'reels': [
+        {type: 'video', id: 'dQw4w9WgXcQ', title: 'Viral Shorts Pack', subtitle: 'High-retention editing for TikTok.', tag: 'SOCIAL CONTENT'},
+        {type: 'video', id: 'dQw4w9WgXcQ', title: 'Product Showcase', subtitle: 'Dynamic transitions for e-commerce.', tag: 'REELS/SHORTS'},
+        {type: 'video', id: 'dQw4w9WgXcQ', title: 'Podcast Highlights', subtitle: 'Multi-cam setup with captions.', tag: 'PODCAST'},
+        {type: 'video', id: 'dQw4w9WgXcQ', title: 'Fitness Reel', subtitle: 'Beat-synced motivational content.', tag: 'REELS'}
+    ],
+    'vfx': [
+        {type: 'video', id: 'ScMzIvxBSi4', title: 'CGI Integration', subtitle: 'Seamlessly blending 3D with reality.', tag: 'VFX'},
+        {type: 'image', url: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f', title: 'Color Workflow', subtitle: 'Davinci Resolve pipeline.', tag: 'GRADING'},
+        {type: 'video', id: 'dQw4w9WgXcQ', title: 'Motion Graphics', subtitle: 'Explaining complex ideas simply.', tag: 'ANIMATION'},
+        {type: 'image', url: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f', title: 'VFX Masterclass', subtitle: 'Advanced compositing techniques.', tag: 'VFX'}
+    ],
+    'meta-ads': [
+        {type: 'video', id: 'ScMzIvxBSi4', title: 'Scale-Up Campaign', subtitle: 'Generating $1M+ in revenue via Meta Ads.', tag: 'MARKETING'},
+        {type: 'image', url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f', title: 'Ad Strategy', subtitle: 'Targeting high-intent audiences.', tag: 'ADVERTISING'},
+        {type: 'image', url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f', title: 'ROI Analysis', subtitle: 'Tracking every penny spent.', tag: 'DATA'},
+        {type: 'image', url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f', title: 'Visual Creatives', subtitle: 'Stopping the scroll with design.', tag: 'DESIGN'}
+    ],
+    'seo': [
+        {type: 'image', url: 'https://images.unsplash.com/photo-1557838923-2985c318be48', title: 'Global SEO Strategy', subtitle: 'Ranking on the first page globally.', tag: 'SEO'},
+        {type: 'image', url: 'https://images.unsplash.com/photo-1557838923-2985c318be48', title: 'Link Building', subtitle: 'Building high-authority backlink profiles.', tag: 'GROWTH'},
+        {type: 'image', url: 'https://images.unsplash.com/photo-1557838923-2985c318be48', title: 'Keyword Research', subtitle: 'Finding low-competition goldmines.', tag: 'RESEARCH'},
+        {type: 'image', url: 'https://images.unsplash.com/photo-1557838923-2985c318be48', title: 'Technical Audit', subtitle: 'Optimizing site speed and structure.', tag: 'SEO'}
+    ],
+    'branding': [
+        {type: 'image', url: 'https://images.unsplash.com/photo-1557426272-fc759fbb7a8d', title: 'Brand Identity', subtitle: 'Crafting unique stories for startups.', tag: 'BRANDING'},
+        {type: 'image', url: 'https://images.unsplash.com/photo-1557426272-fc759fbb7a8d', title: 'Visual Roadmap', subtitle: 'Designing a 12-month visual strategy.', tag: 'STRATEGY'},
+        {type: 'image', url: 'https://images.unsplash.com/photo-1557426272-fc759fbb7a8d', title: 'Authority Building', subtitle: 'Positioning you as a market leader.', tag: 'AUTHORITY'},
+        {type: 'image', url: 'https://images.unsplash.com/photo-1557426272-fc759fbb7a8d', title: 'Viral Planning', subtitle: 'Scripts designed to go viral.', tag: 'VIRAL'}
+    ]
+};
+
+/**
+ * ২. মেইন কন্টেন্ট লোড ফাংশন
+ * এটি আপনার ভিডিও এবং ইমেজগুলোকে স্ক্রিনশটের ওভারলে ডিজাইনে সাজাবে।
+ */
+function loadWorks(category, btnElement) {
+    const display = document.getElementById('portfolio-display');
+    const items = workData[category] || workData['cinematic'];
+    
+    display.style.opacity = '0';
+    
+    setTimeout(() => {
+        display.innerHTML = '';
+        items.forEach((item, index) => {
+            let colSize = '';
+            
+            // লজিক: প্রথম সারিতে (index 0,1) ৮ এবং ৪। দ্বিতীয় সারিতে (index 2,3) ৪ এবং ৮।
+            if (index < 2) {
+                // ১ম রো
+                colSize = (index % 2 === 0) ? 'col-lg-8' : 'col-lg-4';
+            } else {
+                // ২য় রো (বা তার বেশি হলে এই প্যাটার্ন রিপিট হবে)
+                colSize = (index % 2 === 0) ? 'col-lg-4' : 'col-lg-8';
+            }
+            
+            display.innerHTML += `
+                <div class="${colSize} col-md-12">
+                    <div class="portfolio-box reveal-visible">
+                        <div class="portfolio-media">
+                            ${item.type === 'video' 
+                                ? `<iframe src="https://www.youtube.com/embed/${item.id}?rel=0&modestbranding=1" frameborder="0" allowfullscreen></iframe>
+                                   <div class="play-btn-circle"><i class="bi bi-play-fill"></i></div>` 
+                                : `<img src="${item.url}" alt="${item.title}">`
+                            }
+                            <div class="portfolio-overlay">
+                                <div class="overlay-info">
+                                    <span class="cat-tag">${item.tag}</span>
+                                    <h4 class="work-title">${item.title}</h4>
+                                    <p class="work-desc">${item.desc}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+        });
+        display.style.opacity = '1';
+    }, 200);
+
+    if(btnElement) {
+        const parent = btnElement.closest('.sub-filters');
+        parent.querySelectorAll('.sub-btn').forEach(s => s.classList.remove('active'));
+        btnElement.classList.add('active');
+    }
+}
+
+/**
+ * ৩. গ্লোবাল ইভেন্ট লিসেনার
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    // পেজ লোড হওয়া মাত্র প্রথম সাব-সার্ভিসটি দেখাবে
+    const defaultSubBtn = document.querySelector('#sub-video .sub-btn');
+    if (defaultSubBtn) {
+        loadWorks('cinematic', defaultSubBtn);
+    }
+});
+
+// মেইন ক্যাটাগরি সুইচ লজিক
+document.querySelectorAll('.main-filters .filter-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        // মেইন বাটন হাইলাইট
+        document.querySelectorAll('.main-filters .filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        
+        const main = this.getAttribute('data-main');
+        
+        // সব সাব-ফিল্টার লুকানো
+        document.querySelectorAll('.sub-filters').forEach(sf => {
+            sf.classList.add('d-none');
+            sf.classList.remove('active-flex');
+        });
+
+        // টার্গেট সাব-ফিল্টার এবং প্রথম কাজ লোড করা
+        const activeSubContainer = document.getElementById('sub-' + main);
+        if(activeSubContainer) {
+            activeSubContainer.classList.remove('d-none');
+            activeSubContainer.classList.add('active-flex');
+            
+            // অটোমেটিক প্রথম সাব-ক্যাটাগরি সিলেক্ট করা
+            const firstSubBtn = activeSubContainer.querySelector('.sub-btn');
+            if(firstSubBtn) firstSubBtn.click();
+        }
+    });
+});
+</script>
+    
+
+@yield('scripts')
 </body>
-
 </html>
+

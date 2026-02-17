@@ -10,7 +10,7 @@ use Illuminate\Pagination\Paginator;
 use App\Models\SiteConfig;
 use App\Models\SocialLink;
 use App\Models\Category;
-
+use App\Models\GrowBigService;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -49,7 +49,22 @@ class AppServiceProvider extends ServiceProvider
             if (Schema::hasTable('social_links')) {
                 $social_links = SocialLink::all();
             }
-            $view->with('social_links', $social_links);
+            $view->with('socialLinks', $social_links);
+
+            // কুয়েরি ১: শুধুমাত্র প্যারেন্ট সার্ভিস (যাদের parent_id নেই)
+            $parentServices = GrowBigService::whereNull('parent_id')
+                                            ->where('status', 1)
+                                            ->get();
+
+            // কুয়েরি ২: সকল সার্ভিস এবং তাদের আন্ডারে থাকা চাইল্ড/সাব-সার্ভিস (Eager Loading)
+            $allServicesWithChildren = GrowBigService::with('children')
+                                            ->whereNull('parent_id')
+                                            ->where('status', 1)
+                                            ->get();
+
+            // ভিউতে ডাটা পাস করা
+            $view->with('parentServices', $parentServices);
+            $view->with('allServicesWithChildren', $allServicesWithChildren);
 
           
         });

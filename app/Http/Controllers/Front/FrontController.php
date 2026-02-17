@@ -6,68 +6,133 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Category;
-use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
-use App\Models\Brand;
-use App\Models\CompanyCategory;
-use App\Models\Order;
-use App\Models\OrderDetail;
-use App\Models\SystemInformation;
-use App\Models\Message; // Make sure to import the Message model
 use Illuminate\Support\Facades\Validator;
+use App\Models\GrowBigQuickAudit;
+use App\Models\GrowBigContact;
+use App\Models\ServiceHeader;
+use App\Models\GrowBigService;
+use App\Models\GrowBigWhoWeAre;
+use App\Models\ContactHeader;
+use App\Models\PortfolioHeader;
+use App\Models\TestimonialHeader;
+use App\Models\GrowBigTestimonial;
+use App\Models\TeamHeader;
+use App\Models\GrowBigTeam;
+use App\Models\GrowBigHero;
 class FrontController extends Controller
 {
 
-    // Handle Contact Form Submission via AJAX
-    public function contactUsPost(Request $request)
-    {
-        // 1. Validation
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'subject' => 'required|string|max:255',
-            'message' => 'required|string',
+/**
+ * পোর্টফোলিও ডাটা লোড করার ফাংশন (AJAX)
+ */
+public function getPortfolioByService(Request $request)
+{
+    // ১. রিকোয়েস্ট থেকে আইডি এবং এটি প্যারেন্ট কিনা তা নেওয়া
+    $serviceId = $request->service_id;
+    $isParent = $request->is_parent; // ১ মানে প্যারেন্ট, ০ মানে চাইল্ড
+
+    try {
+        if ($isParent == 1) {
+            /**
+             * লজিক: যখন প্যারেন্ট সার্ভিস ট্যাবে ক্লিক করা হবে
+             * তখন ঐ প্যারেন্ট সার্ভিসের আইডি এবং তার আন্ডারে থাকা সকল চাইল্ড/সাব-সার্ভিসের আইডি বের করতে হবে।
+             */
+            $childIds = \App\Models\GrowBigService::where('parent_id', $serviceId)
+                                                ->pluck('id')
+                                                ->toArray();
+            
+            // প্যারেন্ট আইডি এবং চাইল্ড আইডিগুলো একটি অ্যারেতে নেওয়া
+            $allIds = array_merge([$serviceId], $childIds);
+            
+            /**
+             * ডাটাবেজ থেকে ঐ সকল আইডির পোর্টফোলিও খুঁজে বের করা। 
+             * এখানে service_id (প্যারেন্ট) অথবা subcategory_id (চাইল্ড) চেক করা হচ্ছে।
+             */
+            $portfolios = \App\Models\Portfolio::with('subcategory')
+            ->whereIn('service_id', $allIds)
+            ->orWhereIn('subcategory_id', $allIds)
+            ->latest()->get();
+        } else {
+            /**
+             * লজিক: যখন নির্দিষ্ট কোনো চাইল্ড (যেমন: Cinematic বা SEO) বাটনে ক্লিক করা হবে
+             * তখন শুধুমাত্র ঐ নির্দিষ্ট চাইল্ড আইডির পোর্টফোলিও আসবে।
+             */
+            $portfolios = \App\Models\Portfolio::with('subcategory')
+            ->where('service_id', $serviceId)
+            ->orWhere('subcategory_id', $serviceId)
+            ->latest()->get();
+        }
+
+        /**
+         * ২. ডাটাগুলো একটি ছোট ব্লেড ভিউতে পাঠানো যা AJAX রেসপন্স হিসেবে যাবে।
+         * নোট: আপনার যদি এই ফাইলটি না থাকে, তবে একটি তৈরি করে নিন (যেমন: ajax_list.blade.php)
+         */
+        return view('front.home_page.ajax_list', compact('portfolios'))->render();
+
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Something went wrong'], 500);
+    }
+}
+public function quickAuditStore(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'full_name' => 'required|string|max:255',
+        'service' => 'required',
+        'profile_or_social_url' => 'required|url',
+        'email' => 'required|email',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['status' => 'error', 'errors' => $validator->errors()]);
+    }
+
+    try {
+        GrowBigQuickAudit::create([
+            'full_name' => $request->full_name,
+            'service' => $request->service,
+            'profile_or_social_url' => $request->profile_or_social_url,
+            'email' => $request->email,
+            'is_read' => 0
         ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'errors' => $validator->errors()
-            ]);
-        }
-
-        try {
-            // 2. Prepare Data
-            // Note: Your Message model has 'msg', but form has 'subject' & 'message'.
-            // We combine subject and message for storage since model doesn't have 'subject'.
-            // Your Message model has 'phone', but the form doesn't. We set it to null.
-            
-            $fullMessage = "Subject: " . $request->subject . "\n\n" . $request->message;
-
-            Message::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'phone' => null, // Form doesn't have phone, passing null
-                'msg' => $fullMessage,
-            ]);
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Your message has been sent. Thank you!'
-            ]);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Error: ' . $e->getMessage()
-            ]);
-        }
+        return response()->json(['status' => 'success', 'message' => 'Audit request sent successfully!']);
+    } catch (\Exception $e) {
+        return response()->json(['status' => 'error', 'message' => 'Something went wrong!']);
     }
+}
+
+   public function contactStore(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'full_name'   => 'required|string|max:255',
+        'email'       => 'required|email',
+        'interested_in' => 'required',
+        'description' => 'required|string',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['status' => 'error', 'errors' => $validator->errors()]);
+    }
+
+    try {
+        GrowBigContact::create([
+            'full_name'     => $request->full_name,
+            'email'         => $request->email,
+            'interested_in' => $request->interested_in,
+            'description'   => $request->description,
+            'is_read'       => 0
+        ]);
+
+        return response()->json(['status' => 'success', 'message' => 'Message sent successfully!']);
+    } catch (\Exception $e) {
+        return response()->json(['status' => 'error', 'message' => 'Something went wrong!']);
+    }
+}
 
 
     public function aboutUs()
@@ -86,31 +151,16 @@ class FrontController extends Controller
     
    public function index()
 {
-    // ১. আগের কোড (Category with Brands)
-    $home_first_category = Category::where('status', 1)
-        ->whereHas('brands')
-        ->with(['brands' => function($q) {
-            $q->where('status', 1)
-              ->withCount('companyCategories')
-              ->latest()
-              ->take(8);
-        }])
-        ->first();
-
-    // ২. নতুন কোড (Category WITHOUT Brands, BUT WITH Products)
-    // doesntHave('brands') = যার কোনো কোম্পানি নেই
-    // whereHas('products') = যার প্রোডাক্ট আছে
-    $home_second_category = Category::where('status', 1)
-        ->doesntHave('brands') 
-        ->whereHas('products')
-        ->with(['products' => function($q) {
-            $q->where('status', 1)
-              ->latest()
-              ->take(4); // লেটেস্ট ৪টা প্রোডাক্ট
-        }])
-        ->first();
-
-    return view('front.home_page.index', compact('home_first_category', 'home_second_category'));
+$portfolioHeader = PortfolioHeader::first();
+$testimonialHeader = TestimonialHeader::first();
+    $testimonials = GrowBigTestimonial::latest()->get();
+$serviceHeader = ServiceHeader::first();
+    $teamHeader = TeamHeader::first();
+    // socialLinks রিলেশনসহ টিম মেম্বারদের ডাটা ফেচ করা
+    $teamMembers = GrowBigTeam::with('socialLinks')->get();
+   $whoWeAre = GrowBigWhoWeAre::with('listItems')->first();
+   $hero = GrowBigHero::first();
+    return view('front.home_page.index', compact('whoWeAre','portfolioHeader', 'testimonialHeader', 'testimonials', 'serviceHeader', 'teamHeader', 'teamMembers', 'hero'));
 }
 
 
