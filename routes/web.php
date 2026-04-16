@@ -33,7 +33,7 @@ Route::get('/clear', function() {
     \Illuminate\Support\Facades\Artisan::call('route:clear');
     return redirect()->back();
 });
-Route::get('/get-portfolio-by-service', [App\Http\Controllers\Front\FrontController::class, 'getPortfolioByService'])->name('get.portfolio.by.service');
+Route::get('/get-portfolio-by-service', [App\Http\Controllers\Front\FrontController::class, 'getPortfolioByService'])->name('getPortfolioByService');
 Route::post('/contact-submit', [FrontController::class, 'contactStore'])->name('contact.store');
 //frontend part start 
 Route::post('/contact-us-post', [App\Http\Controllers\Front\FrontController::class, 'contactUsPost'])->name('front.contactUsPost');

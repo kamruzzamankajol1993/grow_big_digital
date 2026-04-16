@@ -1233,6 +1233,15 @@ body {
 
 /* মোবাইল রেসপন্সিভনেস */
 @media (max-width: 991px) {
+
+    .btn-primary {
+    background: var(--logo-green);
+    padding: 14px 15px;
+    border-radius: 50px;
+    font-weight: 600;
+    border: none;
+    transition: var(--transition);
+}
     .audit-section {
         padding: 25px;
         margin-top: -60px;
@@ -2580,3 +2589,573 @@ body {
     pointer-events: none;
 }
 
+.active-flex { display: flex !important; } এবং .d-none { display: none !important; }
+
+/* মোবাইল ভার্সন সেটিংস (৭৬৭ পিক্সেল এর নিচে) */
+@media (max-width: 767px) {
+    /* বাটনগুলোর মেইন কন্টেইনার */
+    .custom-responsive-filters {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: space-between;
+        gap: 8px !important; /* বাটনগুলোর মাঝখানের গ্যাপ */
+        padding: 10px 5px !important; /* উপরে ১০ পিক্সেল গ্যাপ দেওয়া হয়েছে */
+        margin-top: 10px; /* উপরের বর্ডার বা এলিমেন্ট থেকে দূরত্ব */
+    }
+
+    .custom-responsive-filters .filter-btn {
+        /* ৩টি বাটন সমানভাবে আটানোর ক্যালকুলেশন */
+        flex: 0 0 calc(33.33% - 6px); 
+        
+        /* ফুল টেক্সট এবং হাইট সেটিংস */
+        white-space: normal !important;
+        word-wrap: break-word;
+        line-height: 1.3; /* টেক্সটের মাঝখানের দূরত্ব সামান্য বাড়ানো হয়েছে */
+        height: auto !important; 
+        min-height: 55px; /* হাইট একটু বাড়িয়ে দেওয়া হয়েছে যাতে গ্যাপ সুন্দর থাকে */
+        
+        font-size: 10px !important;
+        /* প্যাডিং অ্যাডজাস্ট করা হয়েছে যাতে বর্ডারের সাথে টেক্সট না লেগে যায় */
+        padding: 10px 4px !important; 
+        
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+        text-align: center;
+        
+        transition: all 0.3s ease;
+    }
+
+    /* এক্টিভ বাটনের জন্য বাড়তি স্পেসিং চাইলে */
+    .filter-btn.active {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* এক্টিভ বাটনে হালকা শ্যাডো */
+    }
+}
+
+
+@media (max-width: 991px) {
+    /* হেডার টেক্সট এবং সাবটাইটেলের মধ্যে স্পেসিং */
+    #portfolio .display-5 {
+        font-size: 28px !important; /* মোবাইলে টাইটেল বড় হলে ২ লাইনে সুন্দর দেখাবে */
+        margin-top: 15px;
+        line-height: 1.3;
+    }
+
+    #portfolio .ls-2 {
+        letter-spacing: 1px !important; /* মোবাইলে লেটার স্পেসিং সামান্য কমানো */
+    }
+}
+
+
+
+/* ফ্লোটিং কন্টেইনার - উইডথ কমানো এবং পজিশন নিচে নামানো */
+.hero-floating-audit-container {
+    width: 85%; /* উইডথ আরও কমানো হয়েছে */
+    max-width: 1000px; 
+    margin: 80px auto 0; /* ৮০ পিক্সেল নিচে নামানো হয়েছে */
+    position: relative;
+    z-index: 999;
+}
+
+.quick-audit-floating-bar {
+    background: #ffffff;
+    padding: 30px 40px; /* প্যাডিং বাড়ানো হয়েছে টাইটেলের জন্য */
+    border-radius: 30px; 
+    border: 1px solid rgba(0,0,0,0.05);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* ইনপুট স্টাইল */
+.audit-input-minimal {
+    border: none !important;
+    border-bottom: 2px solid #f0f0f0 !important;
+    background: transparent !important;
+    font-size: 14px;
+    padding: 10px 0;
+    border-radius: 0;
+    color: #333;
+    transition: all 0.3s;
+}
+
+.audit-input-minimal:focus {
+    box-shadow: none !important;
+    border-bottom-color: #00a651 !important;
+}
+
+/* বাটন এনিমেশন - শিমার ইফেক্ট */
+.btn-advanced-animate {
+    position: relative;
+    background: linear-gradient(45deg, #00a651, #007d3d);
+    color: #fff;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 166, 81, 0.3);
+}
+
+.btn-advanced-animate::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: all 0.6s;
+}
+
+.btn-advanced-animate:hover::before {
+    left: 100%;
+}
+
+.btn-advanced-animate:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 166, 81, 0.5);
+}
+
+/* মোবাইল রেস্পন্সিভনেস */
+@media (max-width: 991px) {
+    .hero-floating-audit-container {
+        width: 95%;
+        margin-top: 40px;
+    }
+    .quick-audit-floating-bar {
+        padding: 20px;
+        border-radius: 20px;
+    }
+}
+
+/* হিরো সেকশনের নিচের গ্যাপ কমানো */
+#home {
+    padding-bottom: 20px !important; /* প্রয়োজন হলে আরও কমাতে পারেন */
+}
+
+/* এবাউট সেকশনের উপরের গ্যাপ কমানো */
+#about {
+    padding-top: 30px !important; 
+    margin-top: 0 !important;
+}
+
+/* অডিট ফর্মের কারণে যে গ্যাপ তৈরি হচ্ছে তা অ্যাডজাস্ট করা */
+.hero-floating-audit-container {
+    margin: 10px auto 0 !important; /* আগের ৮০ পিক্সেল থেকে কমিয়ে ৪০ করা হয়েছে */
+}
+
+/* মোবাইল ভার্সনের জন্য গ্যাপ অ্যাডজাস্টমেন্ট */
+@media (max-width: 991px) {
+    #home {
+        padding-bottom: 10px !important;
+    }
+    #about {
+        padding-top: 20px !important;
+    }
+    .hero-floating-audit-container {
+        margin-top: 20px !important;
+    }
+}
+
+/* ১. মেইন সেকশন কার্ড ডিজাইন রিমুভ করা */
+.behance-hero-refined .hero-content-card {
+    background: transparent !important; /* ব্যাকগ্রাউন্ড কালার রিমুভ */
+    box-shadow: none !important;       /* শ্যাডো রিমুভ */
+    border: none !important;           /* বর্ডার থাকলে রিমুভ */
+    padding: 0 !important;             /* এক্সট্রা প্যাডিং রিমুভ */
+}
+
+/* ২. ইমেজ গ্রিডের ভেতরের কার্ড ডিজাইন রিমুভ করা (প্রয়োজন হলে) */
+.behance-hero-refined .member-card-wrapper {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* ৩. টেক্সট এরিয়া অ্যাডজাস্টমেন্ট (কার্ড ছাড়া দেখতে সুন্দর লাগার জন্য) */
+.behance-hero-refined .text-area {
+    padding-left: 0;
+}
+
+/* ১. মেইন কার্ড ডিজাইন ও ব্যাকগ্রাউন্ড সম্পূর্ণ রিমুভ */
+.behance-hero-refined .hero-content-card {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+/* ২. টেক্সট কালার ব্ল্যাক রাখা (BUILD TRUST. SHAPE YOUR LEGACY) */
+.hero-main-title {
+    color: #000000 !important; /* সলিড ব্ল্যাক */
+    font-weight: 800;
+    animation: fadeInLeft 1s ease-out both;
+}
+
+/* ৩. ফর্ম ডিজাইন: ট্রান্সপারেন্ট ও অ্যাডভান্সড বর্ডার অ্যানিমেশন */
+.quick-audit-floating-bar {
+    background: transparent !important;
+    border: 1px solid rgba(0, 166, 81, 0.2) !important; /* হালকা লোগো গ্রিন বর্ডার */
+    border-radius: 20px !important;
+    padding: 30px !important;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    animation: fadeInUp 1.2s ease-out both;
+}
+
+.quick-audit-floating-bar:hover {
+    border-color: var(--logo-green) !important;
+    box-shadow: 0 10px 40px rgba(0, 166, 81, 0.1) !important;
+    transform: translateY(-8px);
+}
+
+/* ৪. ইনপুট ফিল্ড: নিওন আন্ডারলাইন ইফেক্ট (কোনো ফিল কালার নেই) */
+.audit-input-minimal {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1) !important;
+    border-radius: 0 !important;
+    color: #000 !important; /* ইনপুট টেক্সট ব্ল্যাক */
+    transition: all 0.3s ease;
+}
+
+.audit-input-minimal:focus {
+    border-bottom-color: var(--logo-green) !important;
+    padding-left: 8px !important;
+    box-shadow: none !important;
+}
+
+/* ৫. সাবমিট বাটন: অ্যাডভান্সড শাইন ও পালস ইফেক্ট */
+.btn-advanced-animate {
+    background: var(--logo-green) !important;
+    color: white !important;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.btn-advanced-animate:hover {
+    transform: scale(1.03);
+    box-shadow: 0 5px 15px rgba(0, 166, 81, 0.3);
+}
+
+.btn-advanced-animate::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -100%;
+    width: 50%;
+    height: 200%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: rotate(25deg);
+    animation: btnShine 4s infinite;
+}
+
+/* ৬. মেম্বার ইমেজগুলোর জন্য ফ্লোটিং মুভমেন্ট */
+.member-card-wrapper {
+    background: transparent !important;
+    border: none !important;
+    animation: floatingObj 6s ease-in-out infinite;
+}
+
+.side-member-stack .member-card-wrapper:nth-child(2) {
+    animation-delay: 3s;
+}
+
+/* --- KEYFRAMES --- */
+
+@keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes btnShine {
+    0% { left: -100%; }
+    20% { left: 150%; }
+    100% { left: 150%; }
+}
+
+@keyframes floatingObj {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* --- HERO BUTTONS CSS --- */
+
+/* ডেস্কটপ এবং জেনারেল স্টাইল */
+.btn-flex-mobile {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+/* বাটন দুটির বেস ডিজাইন */
+.btn-brand-solid, .btn-brand-outline {
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+/* বাটন ১: সলিড স্টাইল */
+.btn-brand-solid {
+    background-color: var(--logo-green) !important;
+    color: #fff !important;
+    border: 2px solid var(--logo-green) !important;
+}
+
+/* বাটন ২: আউটলাইন স্টাইল */
+.btn-brand-outline {
+    background-color: transparent !important;
+    color: #000 !important; /* টেক্সট ব্ল্যাক রাখার জন্য */
+    border: 2px solid #000 !important;
+}
+
+.btn-brand-solid:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 166, 81, 0.3);
+}
+
+.btn-brand-outline:hover {
+    background-color: #000 !important;
+    color: #fff !important;
+    transform: translateY(-3px);
+}
+/* --- মোবাইল ভার্সন বাটন ফিক্স --- */
+@media (max-width: 576px) {
+    /* বাটনগুলোর প্যারেন্ট কন্টেইনারকে ফোর্স করা */
+    .btn-flex-mobile {
+        display: flex !important;
+        flex-direction: row !important; /* পাশাপাশি রাখার জন্য */
+        flex-wrap: nowrap !important;   /* নিচে নামা বন্ধ করতে */
+        gap: 8px !important;            /* বাটনের মাঝখানের ফাঁকা জায়গা */
+        width: 100% !important;
+        justify-content: flex-start !important; /* বাম দিক থেকে শুরু */
+    }
+
+    /* বাটন দুটির সাইজ এবং টেক্সট অ্যাডজাস্টমেন্ট */
+    .btn-flex-mobile .btn {
+        flex: 1 !important;             /* দুটি বাটন সমান জায়গা নিবে */
+        padding: 10px 5px !important;    /* ভেতরের জায়গা কমানো */
+        font-size: 10px !important;      /* ফন্ট ছোট করা যাতে স্ক্রিনে ধরে */
+        white-space: nowrap !important;  /* লেখা যেন দুই লাইনে না হয় */
+        text-align: center !important;
+        min-width: 0 !important;         /* ডিফল্ট উইডথ রিসেট */
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-radius: 6px !important;
+    }
+
+    /* বাটনের ভেতরের আইকন ছোট করা */
+    .btn-flex-mobile .btn i {
+        font-size: 12px !important;
+        margin-right: 4px !important;
+    }
+}
+
+/* জেনারেল স্টাইল (টাইটেল ব্ল্যাক রাখা) */
+.hero-main-title {
+    color: #000000 !important;
+    text-transform: uppercase;
+}
+/* --- মোবাইল ভার্সন ফিক্স (Mobile Version Only) --- */
+@media (max-width: 576px) {
+    .btn-flex-mobile {
+        display: flex !important;
+        flex-direction: row !important; /* বাটন পাশাপাশি রাখবে */
+        justify-content: flex-start;
+        gap: 8px !important; /* মাঝখানের গ্যাপ কমানো হয়েছে */
+        padding: 0;
+    }
+
+    .btn-brand-solid, .btn-brand-outline {
+        padding: 10px 8px !important; /* প্যাডিং কমিয়ে ছোট করা */
+        font-size: 10px !important;     /* ফন্ট সাইজ ছোট করা যাতে স্ক্রিনে ধরে */
+        flex: 1;                       /* দুইটা বাটন সমান জায়গা নিবে */
+        white-space: nowrap;           /* লেখা ভেঙে নিচে যাবে না */
+        min-width: fit-content;
+    }
+
+    /* আইকন ছোট করা */
+    .btn-brand-outline i {
+        font-size: 12px !important;
+        margin-right: 4px !important;
+    }
+}
+/* --- CONTACT SECTION MOBILE FIX --- */
+@media (max-width: 767px) {
+    /* কন্টাক্ট আইটেমগুলোকে পাশাপাশি রাখার জন্য */
+    .contact-item, 
+    .contact-info-wrapper, 
+    .contact-detail-box { 
+        display: flex !important;
+        flex-direction: row !important; /* কলাম থেকে রো তে পরিবর্তন */
+        align-items: center !important;
+        text-align: left !important;
+        gap: 15px !important;
+        margin-bottom: 20px;
+    }
+
+    /* আইকন বা লোগো বক্সের সাইজ ঠিক করা */
+    .contact-icon, 
+    .contact-logo-box {
+        flex-shrink: 0 !important; /* আইকন যেন ছোট হয়ে না যায় */
+        width: 50px !important;
+        height: 50px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* টেক্সট এরিয়া অ্যাডজাস্টমেন্ট */
+    .contact-text-area {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .contact-text-area h5, 
+    .contact-text-area p {
+        margin: 0 !important; /* বাড়তি মার্জিন রিমুভ */
+    }
+}
+
+/* মোবাইল ভার্সন মেম্বার গ্রিড ফিক্স */
+@media (max-width: 767px) {
+    /* মেইন কন্টেইনারকে ফ্লেক্স করা */
+    .behance-grid-layout {
+        display: flex !important;
+        flex-direction: column !important; /* উপরে-নিচে বিন্যাস */
+        gap: 15px !important;
+    }
+
+    /* প্রথম কার্ডটি (Main Expert) পুরো জায়গা নিবে */
+    .main-expert {
+        width: 100% !important;
+        margin-bottom: 10px;
+    }
+
+    /* নিচের দুটি কার্ডের কন্টেইনারকে পাশাপাশি করা */
+    .side-member-stack {
+        display: flex !important;
+        flex-direction: row !important; /* পাশাপাশি বিন্যাস */
+        gap: 10px !important;
+        width: 100% !important;
+    }
+
+    /* ছোট কার্ড দুটির সাইজ সমান করা */
+    .side-member-stack .side-expert {
+        flex: 1 !important; /* অর্ধেক অর্ধেক জায়গা নিবে */
+        margin-bottom: 0 !important; /* ডিফল্ট মার্জিন রিমুভ */
+    }
+
+    /* মোবাইলে ইমেজের উচ্চতা অ্যাডজাস্টমেন্ট (প্রয়োজন হলে) */
+    .side-expert .member-img {
+        height: 150px !important; 
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+    /* টেক্সট ছোট করা যাতে পাশাপাশি ধরে */
+    .member-details-box-sm h6 {
+        font-size: 10px !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .member-details-box-sm p {
+        font-size: 9px !important;
+    }
+
+    /* ব্যাজ আইকন ছোট করা */
+    .google-review-badge-sm {
+        width: 25px !important;
+        height: 25px !important;
+        top: 5px !important;
+        right: 5px !important;
+    }
+}
+
+/* হোভার ইফেক্ট বন্ধ করা */
+/* ১. হোভার ইফেক্ট এবং কার্ড অ্যানিমেশন বন্ধ করা */
+.service-card:hover {
+    transform: none !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important;
+}
+.service-card:hover .service-tags {
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+/* ২. চাইল্ড সেকশন ডিফল্টভাবে পুরোপুরি বন্ধ রাখা */
+.service-child-wrapper {
+    display: none; /* এটি গুরুত্বপূর্ণ: সব সময় ভিসিবল হবে না */
+    overflow: hidden;
+}
+
+.service-tags {
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    transform: none !important;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+/* ৩. স্টাইলিশ বাটন ডিজাইন */
+.service-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 18px;
+    background: #fff;
+    color: var(--logo-blue);
+    border: 2px solid var(--logo-green);
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.service-toggle-btn:hover {
+    background: var(--logo-green);
+    color: #fff;
+}
+
+.service-toggle-btn.active {
+    background: var(--logo-blue);
+    border-color: var(--logo-blue);
+    color: #fff;
+}
+
+.service-toggle-btn .btn-icon {
+    transition: transform 0.3s ease;
+    font-size: 18px;
+}
+
+/* বাটন এক্টিভ হলে প্লাস আইকন ঘুরে যাবে */
+.service-toggle-btn.active .btn-icon {
+    transform: rotate(45deg); /* প্লাস আইকনটি ক্রস হয়ে যাবে */
+}
